@@ -1,0 +1,45 @@
+baseURL = "/"
+title = "Setting up Pratham's machines"
+theme = "hello-friend-ng"
+languageCode = "en-in"
+
+[params]
+	
+	# params for website
+	author = "Pratham Patel"
+	homeSubtitle = "the guide to follow when machines are formatted"
+
+	# params for Hugo
+	readMore = false
+	disableReadOtherPosts = true
+	readNextPosts = 10
+	enableThemeToggle = true
+	enableSharingButtons = false
+	enableEmoji = true
+
+	dateform = "2006-01-02"
+	dateformShort = "01/02"
+	dateformNum = "2006-01-02"
+	dateformNumTime = "2006-01-01 15:04"
+
+	[params.footer]
+		author = true
+		topText = []
+		bottomText = [
+			"Powered by Hugo, for Pratham Patel (theme: (hello-friend-ng)[https://github.com/rhazdon/hugo-theme-hello-friend-ng])"
+		]
+
+	[params.logo]
+		logoMark = "# "
+		logoText = " dd if=/dev/zero of=/dev/sda"
+		logoHomeLink = "/"
+
+
+[menu]
+	[[menu.main]]
+		name = "Machines"
+		url = "/posts"
+
+
+#[markup.goldmark.renderer]
+#	unsafe = true
