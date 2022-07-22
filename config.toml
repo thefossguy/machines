@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://mach.thefossguy.com/"
 title = "Setting up Pratham's machines"
 theme = "hello-friend-ng"
 languageCode = "en-in"
@@ -26,7 +26,7 @@ languageCode = "en-in"
 		author = true
 		topText = []
 		bottomText = [
-			"Powered by Hugo, for Pratham Patel (theme: (hello-friend-ng)[https://github.com/rhazdon/hugo-theme-hello-friend-ng])"
+			"Powered by Hugo, for Pratham Patel"
 		]
 
 	[params.logo]
