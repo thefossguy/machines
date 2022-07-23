@@ -335,7 +335,7 @@ podman-compose -f master-compose.yml up -d
 ```bash
 cd $HOME/.config/systemd/user
 
-podman generate systemd -f --name caddy-vishwakarma
+podman generate systemd -f --name caddy-vishwambhar
 podman generate systemd -f --name gitea-govinda
 podman generate systemd -f --name gitea-chitragupta
 podman generate systemd -f --name hugo-vaikunthnatham
@@ -343,9 +343,9 @@ podman generate systemd -f --name nextcloud-govinda
 podman generate systemd -f --name nextcloud-chitragupta
 podman generate systemd -f --name hugo-mahayogi
 
-systemctl --user enable container-caddy-vishwakarma.service container-gitea-chitragupta.service container-gitea-govinda.service container-hugo-mahayogi.service container-hugo-vaikunthnatham.service container-nextcloud-chitragupta.service container-nextcloud-govinda.service
+systemctl --user enable container-caddy-vishwambhar.service container-gitea-chitragupta.service container-gitea-govinda.service container-hugo-mahayogi.service container-hugo-vaikunthnatham.service container-nextcloud-chitragupta.service container-nextcloud-govinda.service
 
-#systemctl --user enable container-caddy-vishwakarma.service
+#systemctl --user enable container-caddy-vishwambhar.service
 #systemctl --user enable container-gitea-chitragupta.service
 #systemctl --user enable container-gitea-govinda.service
 #systemctl --user enable container-hugo-mahayogi.service
