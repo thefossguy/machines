@@ -24,6 +24,12 @@ sudo eject /dev/XXX
 
 ## Stage 0001: Immediate initial setup
 
+### REBOOT! (hostname needs to come in effect)
+
+```bash
+sudo reboot +0
+```
+
 ### Expand the rootfs
 
 ```bash
@@ -171,10 +177,7 @@ sudo modprobe zfs
 
 ```bash
 sudo systemctl enable zfs-import-cache.service
-sudo systemctl enable zfs-import-cache.service
 sudo systemctl enable zfs-import-scan.service
-sudo systemctl enable zfs-import-scan.service
-sudo systemctl enable zfs-mount.service
 sudo systemctl enable zfs-mount.service
 sudo systemctl enable zfs-share.service
 sudo systemctl enable zfs.target
@@ -214,7 +217,7 @@ sudo zpool export trayimurti
 sudo zpool import
 sudo zpool import -d /dev/disk/by-id <pool-id>
 
-zpool set cachefile=/etc/zfs/zpool.cache trayimurti
+sudo zpool set cachefile=/etc/zfs/zpool.cache trayimurti
 
 zpool status -v
 zfs list
