@@ -188,7 +188,7 @@ sudo systemctl enable zfs-zed.service
 ### Make sure an import cache file exists
 
 ```bash
-zpool set cachefile=/etc/zfs/zpool.cache trayimurti
+sudo zpool set cachefile=/etc/zfs/zpool.cache trayimurti
 ```
 
 
@@ -246,13 +246,6 @@ sudo firewall-cmd --list-ports
 ```
 
 
-### Pull images
-
-```bash
-podman pull docker.io/library/caddy:2-alpine docker.io/gitea/gitea:latest docker.io/library/postgres:alpine docker.io/klakegg/hugo:alpine docker.io/library/nextcloud docker.io/library/mariadb
-```
-
-
 ### Get fs ready
 
 ```bash
@@ -274,13 +267,21 @@ mkdir -vp /trayimurti/containers/volumes/gitea/{database,web/{data,config}}
 mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
 ```
 
+### Hugo
+
+```bash
+git clone git@gitlab.com:shivohamx3/blog.git /trayimurti/containers/volumes/blog
+cd /trayimurti/containers/volumes/blog && git submodule init && git submodule update
+git clone git@gitlab.com:shivohamx3/machines.git /trayimurti/containers/volumes/mach
+cd /trayimurti/containers/volumes/mach && git submodule init && git submodule update
+```
 
 ### Caddy
 
 1. Visit the [Cloudflare dashboard](https://dash.cloudflare.com/)
 2. Select domain
 3. On the left sidebar, select 'SSL/TLS'. Make sure _Encryption Mode_ is **Full (strict)**.
-4. Under 'SSL/TLS', goto 'Origin Server'.
+4. Under 'SSL/TLS', goto '**Origin Server**'.
 5. Create a new Certificate **with default values**.
 6. Populate `/trayimurti/containers/volumes/caddy/ssl/{certs/certificate.pem,private/key.pem}`.
 7. Change permissions for `/trayimurti/containers/volumes/caddy/ssl/private`.
