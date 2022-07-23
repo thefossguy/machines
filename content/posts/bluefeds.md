@@ -246,6 +246,13 @@ sudo firewall-cmd --list-ports
 ```
 
 
+### Pull images
+
+```bash
+podman pull docker.io/library/caddy:2-alpine && sleep 60 && podman pull docker.io/gitea/gitea:latest && sleep 60 && podman pull docker.io/klakegg/hugo:alpine && sleep 60 && podman pull docker.io/library/mariadb:latest && sleep 60 && podman pull docker.io/library/nextcloud:production && sleep 60 && podman pull docker.io/library/postgres:alpine && sleep 60
+```
+
+
 ### Get fs ready
 
 ```bash
@@ -267,6 +274,7 @@ mkdir -vp /trayimurti/containers/volumes/gitea/{database,web/{data,config}}
 mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
 ```
 
+
 ### Hugo
 
 ```bash
@@ -275,6 +283,7 @@ cd /trayimurti/containers/volumes/blog && git submodule init && git submodule up
 git clone git@gitlab.com:shivohamx3/machines.git /trayimurti/containers/volumes/mach
 cd /trayimurti/containers/volumes/mach && git submodule init && git submodule update
 ```
+
 
 ### Caddy
 
