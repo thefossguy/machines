@@ -1,7 +1,7 @@
 ---
 
 title: "Setup bluefeds"
-date: 2022-07-22T23:51:03+05:30
+date: 2022-07-23T08:00:30+05:30
 draft: false
 toc: true
 
