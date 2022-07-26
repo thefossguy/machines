@@ -53,8 +53,11 @@ Use fastest mirror
 Exclude package `shim-aa64` (causes uboot to panic)
 
 ```bash
-echo -ne "\nmax_parallel_downloads=20\nfastestmirror=True\nlog_compress=True\ngpgcheck=True\nexcludepkgs=shim-aa64" | sudo tee -a /etc/dnf/dnf.conf
+echo -ne "\nmax_parallel_downloads=20\nlog_compress=True\nexcludepkgs=shim-aa64" | sudo tee -a /etc/dnf/dnf.conf
 #sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+# mirrors might be out of sync, don't use this...
+#echo -ne "\nfastestmirror=True" | sudo tee -a /etc/dnf/dnf.conf
 
 sudo dnf clean all
 ```
@@ -249,7 +252,11 @@ sudo firewall-cmd --list-ports
 ### Pull images
 
 ```bash
-podman pull docker.io/library/caddy:2-alpine && sleep 60 && podman pull docker.io/gitea/gitea:latest && sleep 60 && podman pull docker.io/klakegg/hugo:alpine && sleep 60 && podman pull docker.io/library/mariadb:latest && sleep 60 && podman pull docker.io/library/nextcloud:production && sleep 60 && podman pull docker.io/library/postgres:alpine && sleep 60
+sleep 60 && podman pull docker.io/gitea/gitea:latest
+sleep 60 && podman pull docker.io/klakegg/hugo:alpine
+sleep 60 && podman pull docker.io/library/caddy:alpine
+sleep 60 && podman pull docker.io/library/nextcloud:production
+sleep 60 && podman pull docker.io/library/postgres:alpine
 ```
 
 
@@ -270,7 +277,7 @@ sudo chown pratham:pratham -vR /trayimurti/containers/volumes
 
 ```bash
 mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl/{private,certs},caddy_{data,config}}
-mkdir -vp /trayimurti/containers/volumes/gitea/{database,web/{data,config}}
+mkdir -vp /trayimurti/containers/volumes/gitea/{database,web}
 mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
 ```
 
@@ -336,22 +343,24 @@ podman-compose -f master-compose.yml up -d
 cd $HOME/.config/systemd/user
 
 podman generate systemd -f --name caddy-vishwambhar
-podman generate systemd -f --name gitea-govinda
 podman generate systemd -f --name gitea-chitragupta
-podman generate systemd -f --name hugo-vaikunthnatham
-podman generate systemd -f --name nextcloud-govinda
-podman generate systemd -f --name nextcloud-chitragupta
+podman generate systemd -f --name gitea-govinda
 podman generate systemd -f --name hugo-mahayogi
+podman generate systemd -f --name hugo-vaikunthnatham
+podman generate systemd -f --name nextcloud-chitragupta
+podman generate systemd -f --name nextcloud-govinda
+podman generate systemd -f --name nextcloud-karma
 
-systemctl --user enable container-caddy-vishwambhar.service container-gitea-chitragupta.service container-gitea-govinda.service container-hugo-mahayogi.service container-hugo-vaikunthnatham.service container-nextcloud-chitragupta.service container-nextcloud-govinda.service
+systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
 
-#systemctl --user enable container-caddy-vishwambhar.service
-#systemctl --user enable container-gitea-chitragupta.service
-#systemctl --user enable container-gitea-govinda.service
-#systemctl --user enable container-hugo-mahayogi.service
-#systemctl --user enable container-hugo-vaikunthnatham.service
-#systemctl --user enable container-nextcloud-chitragupta.service
-#systemctl --user enable container-nextcloud-govinda.service
+#systemctl --user enable container-caddy-vishwambhar
+#systemctl --user enable container-gitea-chitragupta
+#systemctl --user enable container-gitea-govinda
+#systemctl --user enable container-hugo-mahayogi
+#systemctl --user enable container-hugo-vaikunthnatham
+#systemctl --user enable container-nextcloud-chitragupta
+#systemctl --user enable container-nextcloud-govinda
+#systemctl --user enable container-nextcloud-karma
 ```
 
 ---
