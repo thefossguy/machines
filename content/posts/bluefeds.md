@@ -370,17 +370,36 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 
 ### user crontab
 
-```bash {linenos=true}
-# empty for now
+```bash
+# power down containers before a snapshot is taken on 00:00 Fridays
+45 23 * * 4 systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karm
+a
+# start containers after a snapshot is taken on 00:00 Fridays
+10 00 * * 5 systemctl --user start container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-kar
+ma
+
+
+# a zfs scrub takes place on the first Friday of every month
+# this is done at 21:00 hours
+# so stop all containers before the scrub takes place
+45 20 * * 5 [ $(date +\%d) -le 07 ] && systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
+
+# maintenance script
+# [[ if zpool scrub is not running ]]
+#   -> [[ if containers are not running ]]
+#     -> start containers
+* * * * * bash /home/pratham/.scripts/cron/pratham/maintenance.sh
 ```
 
 
 ### root crontab
 
-
-```bash {linenos=true}
+```bash
 # update fs database every 6 hours
 * */6 * * * updatedb
+
+# create zfs snapshots every Friday
+0 0 * * 5 bash /home/pratham/.scripts/cron/root/zfs-bak.sh
 
 # start scrub
 # on the first Friday of every month
@@ -388,11 +407,5 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 0 21 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub
 
 # maintenance script
-0 20 * * * bash /home/pratham/.scripts/cron/root/maintenance.sh
-```
-
-```maintenance.sh
-#!/usr/bin/env bash
-
-find / -type f -name "*.DS_Store" -exec rm {} \;
+#0 20 * * * bash /home/pratham/.scripts/cron/root/maintenance.sh
 ```
