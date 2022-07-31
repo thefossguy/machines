@@ -71,6 +71,14 @@ sudo grubby --remove-args=rhgb --update-kernel=ALL
 ```
 
 
+### Generate SSH keys
+
+```bash
+cd $HOME/.ssh
+ssh-keygen -t ed25519
+```
+
+
 ### Reboot
 
 ```bash
