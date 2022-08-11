@@ -17,7 +17,14 @@ sudo hostnamectl set-hostname flameboi
 ```
 
 
-### Change the DNS Server
+### Set timezone
+
+```bash
+sudo timedatectl set-timezone Asia/Kolkata
+```
+
+
+### Set DNS Server
 
 ```bash
 nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.dns "1.1.1.2,1.0.0.2"
