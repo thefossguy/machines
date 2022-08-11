@@ -9,9 +9,16 @@ toc: true
 
 ## Stage 0000: Flash SD Card
 
+Verify the checksum first
 
 ```bash
-xzcat Fedora-IMAGE-NAME.raw.xz | sudo dd status=progress bs=4M of=/dev/XXX
+echo "<CHECKSUM> *Fedora-Server-VERSION.aarch64.raw.xz" | shasum --check
+```
+
+Flash the SD Card
+
+```bash
+xzcat Fedora-Server-VERSION.aarch64.raw.xz | sudo dd status=progress bs=4M of=/dev/XXX
 sync && sync && sync
 sudo lvchange -an /dev/fedora_fedora/root
 sudo eject /dev/XXX
@@ -22,11 +29,35 @@ sudo eject /dev/XXX
 
 ## Stage 0001: Immediate initial setup
 
+
+### Set hostname
+
+```bash
+sudo hostnamectl set-hostname bluefeds
+```
+
+
+### Set timezone
+
+```bash
+sudo timedatectl set-timezone Asia/Kolkata
+```
+
+
+### Set DNS Servers
+
+```bash
+nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.dns "1.1.1.2,1.0.0.2"
+nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.ignore-auto-dns yes
+```
+
+
 ### REBOOT! (hostname needs to come in effect)
 
 ```bash
 sudo reboot +0
 ```
+
 
 ### Expand the rootfs
 
@@ -68,15 +99,10 @@ sudo grubby --remove-args=rhgb --update-kernel=ALL
 
 ```bash
 cd $HOME/.ssh
-ssh-keygen -t ed25519
-```
-
-
-### Set DNS servers
-
-```bash
-nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.dns "1.1.1.2,1.0.0.2"
-nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.ignore-auto-dns yes
+ssh-keygen -t ed25519 -f gitea
+ssh-keygen -t ed25519 -f github
+ssh-keygen -t ed25519 -f gitlab
+ssh-keygen -t ed25519 -f sentinel
 ```
 
 
@@ -383,11 +409,9 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 
 ```bash
 # power down containers before a snapshot is taken on 00:00 Fridays
-45 23 * * 4 systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karm
-a
+45 23 * * 4 systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
 # start containers after a snapshot is taken on 00:00 Fridays
-10 00 * * 5 systemctl --user start container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-kar
-ma
+10 00 * * 5 systemctl --user start container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
 
 
 # a zfs scrub takes place on the first Friday of every month
