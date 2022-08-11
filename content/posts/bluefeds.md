@@ -1,13 +1,11 @@
 ---
 
-title: "Setup bluefeds"
+title: "Setup bluefeds (Fedora Server arm64)"
 date: 2022-07-23T08:00:30+05:30
 draft: false
 toc: true
 
 ---
-
-# Setup bluefeds (Fedora Server on Raspberry Pi)
 
 ## Stage 0000: Flash SD Card
 
@@ -48,16 +46,11 @@ sudo rootfs-expand
 
 Parallel downloads: 20 (lol)
 
-Use fastest mirror
-
 Exclude package `shim-aa64` (causes uboot to panic)
 
 ```bash
-echo -ne "\nmax_parallel_downloads=20\nlog_compress=True\nexcludepkgs=shim-aa64" | sudo tee -a /etc/dnf/dnf.conf
+echo -ne "\nmax_parallel_downloads=20\nlog_compress=True\nfastestmirror=False\nexcludepkgs=shim-aa64" | sudo tee -a /etc/dnf/dnf.conf
 #sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-
-# mirrors might be out of sync, don't use this...
-#echo -ne "\nfastestmirror=True" | sudo tee -a /etc/dnf/dnf.conf
 
 sudo dnf clean all
 ```
@@ -76,6 +69,14 @@ sudo grubby --remove-args=rhgb --update-kernel=ALL
 ```bash
 cd $HOME/.ssh
 ssh-keygen -t ed25519
+```
+
+
+### Set DNS servers
+
+```bash
+nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.dns "1.1.1.2,1.0.0.2"
+nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.ignore-auto-dns yes
 ```
 
 
@@ -350,14 +351,16 @@ podman-compose -f master-compose.yml up -d
 ```bash
 cd $HOME/.config/systemd/user
 
-podman generate systemd -f --name caddy-vishwambhar
-podman generate systemd -f --name gitea-chitragupta
-podman generate systemd -f --name gitea-govinda
-podman generate systemd -f --name hugo-mahayogi
-podman generate systemd -f --name hugo-vaikunthnatham
-podman generate systemd -f --name nextcloud-chitragupta
-podman generate systemd -f --name nextcloud-govinda
-podman generate systemd -f --name nextcloud-karma
+podman generate systemd -f --name caddy-vishwambhar --new
+podman generate systemd -f --name gitea-chitragupta --new
+podman generate systemd -f --name gitea-govinda --new
+podman generate systemd -f --name hugo-mahayogi --new
+podman generate systemd -f --name hugo-vaikunthnatham --new
+podman generate systemd -f --name nextcloud-chitragupta --new
+podman generate systemd -f --name nextcloud-govinda --new
+podman generate systemd -f --name nextcloud-karma --new
+
+systemctl --user daemon-reload
 
 systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
 
