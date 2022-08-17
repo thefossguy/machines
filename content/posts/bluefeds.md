@@ -278,7 +278,7 @@ sudo reboot +0
 ### Open ports
 
 ```bash
-sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp
+sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp --add-port=8050/udp --add-port=8060/tcp --add-port=8061/tcp --add-port=8062/udp
 sudo firewall-cmd --reload
 sudo firewall-cmd --list-ports
 ```
@@ -292,6 +292,8 @@ sleep 60 && podman pull docker.io/klakegg/hugo:alpine
 sleep 60 && podman pull docker.io/library/caddy:alpine
 sleep 60 && podman pull docker.io/library/nextcloud:production
 sleep 60 && podman pull docker.io/library/postgres:alpine
+sleep 60 && podman pull lscr.io/linuxserver/wireguard:latest
+sleep 60 && podman pull lscr.io/linuxserver/transmission:latest
 ```
 
 
@@ -303,8 +305,13 @@ sudo zfs create trayimurti/containers/volumes/gitea
 sudo zfs create trayimurti/containers/volumes/blog
 sudo zfs create trayimurti/containers/volumes/nextcloud
 sudo zfs create trayimurti/containers/volumes/mach
+sudo zfs create trayimurti/containers/volumes/wireguard
+
+sudo zfs create trayimurti/torrents
+sudo zfs create trayimurti/torrents/.config
 
 sudo chown pratham:pratham -vR /trayimurti/containers/volumes
+sudo chown pratham:pratham -vR /trayimurti/torrents
 ```
 
 
@@ -349,12 +356,19 @@ cp -v Caddyfile /trayimurti/containers/volumes/caddy/
 ```
 
 
+### WireGuard
+
+1. Log into your [ProtonVPN account](https://protonvpn.com/)
+2. On the sidebar, go under `Downloads` > `WireGuard configuration` (or [click here](https://account.protonvpn.com/downloads#wireguard-configuration))
+3. Write the config to `/trayimurti/containers/volumes/wireguard/wg0.conf`
+
+
+
 ### Generate container secrets for passwords
 
 ```bash
 openssl rand -base64 20 | podman secret create gitea_database_user_password -
 openssl rand -base64 20 | podman secret create nextcloud_database_user_password -
-openssl rand -base64 20 | podman secret create nextcloud_database_root_password -
 ```
 
 
@@ -385,10 +399,12 @@ podman generate systemd -f --name hugo-vaikunthnatham --new
 podman generate systemd -f --name nextcloud-chitragupta --new
 podman generate systemd -f --name nextcloud-govinda --new
 podman generate systemd -f --name nextcloud-karma --new
+podman generate systemd -f --name transmission-ketu --new
+podman generate systemd -f --name wireguard-rahu --new
 
 systemctl --user daemon-reload
 
-systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
+systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma container-transmission-ketu container-wireguard-rahu
 
 #systemctl --user enable container-caddy-vishwambhar
 #systemctl --user enable container-gitea-chitragupta
@@ -398,6 +414,8 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 #systemctl --user enable container-nextcloud-chitragupta
 #systemctl --user enable container-nextcloud-govinda
 #systemctl --user enable container-nextcloud-karma
+#systemctl --user enable container-transmission-ketu
+#systemctl --user enable container-wireguard-rahu
 ```
 
 ---
