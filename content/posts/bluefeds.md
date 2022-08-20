@@ -52,6 +52,20 @@ nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | 
 ```
 
 
+### Enable loading the Wireguard kernel module at boot.
+
+```bash
+echo "wireguard" | sudo tee /etc/modules-load.d/wireguard.conf
+```
+
+
+### Modify motd
+
+```bash
+echo "\n# added by PRATHAM\n/home/pratham/.scripts/motd/show_logs.sh" | sudo tee -a /etc/profile
+```
+
+
 ### REBOOT! (hostname needs to come in effect)
 
 ```bash
@@ -207,7 +221,8 @@ sh autogen.sh
 make -j1 rpm-utils rpm-dkms
 
 sudo yum localinstall *.$(uname -p).rpm *.noarch.rpm
-sudo modprobe zfs
+
+echo "zfs" | sudo tee /etc/modules-load.d/zfs.conf
 ```
 
 
@@ -248,7 +263,14 @@ sudo zfs create trayimurti/containers/volumes/gitea
 sudo zfs create trayimurti/containers/volumes/mach
 sudo zfs create trayimurti/containers/volumes/nextcloud
 
+sudo zfs create trayimurti/torrents
+sudo zfs set recordsize=16K trayimurti/torrents
+sudo zfs create trayimurti/torrents/downloads
+sudo zfs create trayimurti/torrents/downloads/.incomplete
+sudo zfs create trayimurti/torrents/config
+
 sudo chown pratham:pratham -vR /trayimurti
+sudo chown pratham:pratham -vR /trayimurti/torrents
 
 sudo zpool export trayimurti
 
@@ -278,7 +300,7 @@ sudo reboot +0
 ### Open ports
 
 ```bash
-sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp --add-port=8050/udp --add-port=8060/tcp --add-port=8061/tcp --add-port=8062/udp
+sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp --add-port=8050/tcp --add-port=8051/tcp --add-port=8052/udp
 sudo firewall-cmd --reload
 sudo firewall-cmd --list-ports
 ```
@@ -287,28 +309,36 @@ sudo firewall-cmd --list-ports
 ### Pull images
 
 ```bash
+sleep 60 && podman pull lscr.io/linuxserver/transmission:latest
 sleep 60 && podman pull docker.io/gitea/gitea:latest
 sleep 60 && podman pull docker.io/klakegg/hugo:alpine
 sleep 60 && podman pull docker.io/library/caddy:alpine
 sleep 60 && podman pull docker.io/library/nextcloud:production
 sleep 60 && podman pull docker.io/library/postgres:alpine
-sleep 60 && podman pull lscr.io/linuxserver/wireguard:latest
-sleep 60 && podman pull lscr.io/linuxserver/transmission:latest
 ```
 
 
 ### Get fs ready
 
 ```bash
+sudo zfs set atime=off trayimurti
+sudo zfs set primarycache=all trayimurti
+sudo zfs set recordsize=1M trayimurti
+sudo zfs set xattr=sa trayimurti
+
+sudo zfs create trayimurti/containers
+sudo zfs create trayimurti/containers/volumes
+sudo zfs create trayimurti/containers/volumes/blog
 sudo zfs create trayimurti/containers/volumes/caddy
 sudo zfs create trayimurti/containers/volumes/gitea
-sudo zfs create trayimurti/containers/volumes/blog
-sudo zfs create trayimurti/containers/volumes/nextcloud
 sudo zfs create trayimurti/containers/volumes/mach
-sudo zfs create trayimurti/containers/volumes/wireguard
+sudo zfs create trayimurti/containers/volumes/nextcloud
 
 sudo zfs create trayimurti/torrents
-sudo zfs create trayimurti/torrents/.config
+sudo zfs set recordsize=16K trayimurti/torrents
+sudo zfs create trayimurti/torrents/downloads
+sudo zfs create trayimurti/torrents/downloads/.incomplete
+sudo zfs create trayimurti/torrents/config
 
 sudo chown pratham:pratham -vR /trayimurti/containers/volumes
 sudo chown pratham:pratham -vR /trayimurti/torrents
@@ -356,14 +386,6 @@ cp -v Caddyfile /trayimurti/containers/volumes/caddy/
 ```
 
 
-### WireGuard
-
-1. Log into your [ProtonVPN account](https://protonvpn.com/)
-2. On the sidebar, go under `Downloads` > `WireGuard configuration` (or [click here](https://account.protonvpn.com/downloads#wireguard-configuration))
-3. Write the config to `/trayimurti/containers/volumes/wireguard/wg0.conf`
-
-
-
 ### Generate container secrets for passwords
 
 ```bash
@@ -399,23 +421,11 @@ podman generate systemd -f --name hugo-vaikunthnatham --new
 podman generate systemd -f --name nextcloud-chitragupta --new
 podman generate systemd -f --name nextcloud-govinda --new
 podman generate systemd -f --name nextcloud-karma --new
-podman generate systemd -f --name transmission-ketu --new
-podman generate systemd -f --name wireguard-rahu --new
+podman generate systemd -f --name transmission-raadhe --new
 
 systemctl --user daemon-reload
 
-systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma container-transmission-ketu container-wireguard-rahu
-
-#systemctl --user enable container-caddy-vishwambhar
-#systemctl --user enable container-gitea-chitragupta
-#systemctl --user enable container-gitea-govinda
-#systemctl --user enable container-hugo-mahayogi
-#systemctl --user enable container-hugo-vaikunthnatham
-#systemctl --user enable container-nextcloud-chitragupta
-#systemctl --user enable container-nextcloud-govinda
-#systemctl --user enable container-nextcloud-karma
-#systemctl --user enable container-transmission-ketu
-#systemctl --user enable container-wireguard-rahu
+systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma container-transmission-raadhe
 ```
 
 ---
@@ -426,16 +436,11 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 ### user crontab
 
 ```bash
-# power down containers before a snapshot is taken on 00:00 Fridays
-45 23 * * 4 systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
-# start containers after a snapshot is taken on 00:00 Fridays
-10 00 * * 5 systemctl --user start container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
-
-
 # a zfs scrub takes place on the first Friday of every month
 # this is done at 21:00 hours
 # so stop all containers before the scrub takes place
-45 20 * * 5 [ $(date +\%d) -le 07 ] && systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma
+# DON'T DO THIS THO
+#55 20 * * 5 [ $(date +\%d) -le 07 ] && systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma container-transmission-raadhe
 
 # maintenance script
 # [[ if zpool scrub is not running ]]
@@ -451,7 +456,7 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 # update fs database every 6 hours
 * */6 * * * updatedb
 
-# create zfs snapshots every Friday
+# create zfs snapshot of `nextcloud` volume every Friday
 0 0 * * 5 bash /home/pratham/.scripts/cron/root/zfs-bak.sh
 
 # start scrub
