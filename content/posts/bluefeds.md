@@ -116,6 +116,7 @@ cd $HOME/.ssh
 ssh-keygen -t ed25519 -f gitea
 ssh-keygen -t ed25519 -f github
 ssh-keygen -t ed25519 -f gitlab
+ssh-keygen -t ed25519 -f flameboi
 ssh-keygen -t ed25519 -f sentinel
 ```
 
@@ -383,6 +384,15 @@ Copy `Caddyfile` to the appropriate directory.
 
 ```bash
 cp -v Caddyfile /trayimurti/containers/volumes/caddy/
+```
+
+
+### Cockpit
+
+something-something enable SSL for cockpit
+
+```bash
+sudo cp cockpit.conf /etc/cockpit/cockpit.conf
 ```
 
 
