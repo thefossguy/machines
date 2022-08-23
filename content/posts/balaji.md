@@ -1,6 +1,6 @@
 ---
 
-title: "Setup bluefeds (Fedora Server arm64)"
+title: "Setup balaji (Fedora Server arm64)"
 date: 2022-07-23T08:00:30+05:30
 draft: false
 toc: true
@@ -33,7 +33,7 @@ sudo eject /dev/XXX
 ### Set hostname
 
 ```bash
-sudo hostnamectl set-hostname bluefeds
+sudo hostnamectl set-hostname balaji
 ```
 
 
@@ -113,11 +113,12 @@ sudo grubby --remove-args=rhgb --update-kernel=ALL
 
 ```bash
 cd $HOME/.ssh
+ssh-keygen -t ed25519 -f adinath
 ssh-keygen -t ed25519 -f gitea
 ssh-keygen -t ed25519 -f github
 ssh-keygen -t ed25519 -f gitlab
-ssh-keygen -t ed25519 -f flameboi
-ssh-keygen -t ed25519 -f sentinel
+ssh-keygen -t ed25519 -f harinarayan
+ssh-keygen -t ed25519 -f zfs
 ```
 
 
@@ -160,7 +161,7 @@ sudo reboot +0
 ### Install packages
 
 ```bash
-sudo dnf install aardvark-dns aria2 bat btop buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools neovim nload nodejs openssh-server overpass-mono-fonts perl-Digest-SHA podman podman-compose qemu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools tmux tree unrar unzip util-linux-user vim-enhanced wget yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
+sudo dnf install aardvark-dns aria2 bat btop buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools mediainfo neovim nload nodejs openssh-server overpass-mono-fonts perl-Digest-SHA podman podman-compose qemu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools ssmtp tmux tree unrar unzip util-linux-user vim-enhanced wget yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
 
 # sudo dnf install plocate
 # sudo dnf install qemu-device-display-virtio-gpu
@@ -273,6 +274,8 @@ sudo zfs create trayimurti/torrents/config
 sudo chown pratham:pratham -vR /trayimurti
 sudo chown pratham:pratham -vR /trayimurti/torrents
 
+sudo zfs allow -u pratham create,destroy,mount,snapshot,send,hold trayimurti
+
 sudo zpool export trayimurti
 
 sudo zpool import
@@ -343,6 +346,8 @@ sudo zfs create trayimurti/torrents/config
 
 sudo chown pratham:pratham -vR /trayimurti/containers/volumes
 sudo chown pratham:pratham -vR /trayimurti/torrents
+
+sudo zfs allow -u pratham send,snapshot,hold trayimurti
 ```
 
 

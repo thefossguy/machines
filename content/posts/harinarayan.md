@@ -1,6 +1,6 @@
 ---
 
-title: "Setup flameboi (Pop OS)"
+title: "Setup harinarayan (Pop OS)"
 date: 2022-07-23T08:00:00+05:30
 draft: false
 toc: true
@@ -13,7 +13,7 @@ toc: true
 ### Set hostname
 
 ```bash
-sudo hostnamectl set-hostname flameboi
+sudo hostnamectl set-hostname harinarayan
 ```
 
 
@@ -46,11 +46,11 @@ sudo systemctl enable nvidia-suspend nvidia-hibernate nvidia-resume
 
 ```bash
 cd $HOME/.ssh
-ssh-keygen -t ed25519 -f bluefeds
+ssh-keygen -t ed25519 -f adinath
+ssh-keygen -t ed25519 -f balaji
 ssh-keygen -t ed25519 -f gitea
 ssh-keygen -t ed25519 -f github
 ssh-keygen -t ed25519 -f gitlab
-ssh-keygen -t ed25519 -f sentinel
 ```
 
 ### Reboot
