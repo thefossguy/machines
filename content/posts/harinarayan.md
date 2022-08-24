@@ -27,8 +27,9 @@ sudo timedatectl set-timezone Asia/Kolkata
 ### Set DNS Server
 
 ```bash
-nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.dns "1.1.1.2,1.0.0.2"
-nmcli connection modify "$(nmcli -g name,device connection show | grep "eth0" | cut -f1 -d":")" ipv4.ignore-auto-dns yes
+temp_var=$(nmcli -g name,device connection show | grep "enp" | cut -f1 -d":")
+nmcli connection modify "$temp_var" ipv4.dns "1.1.1.2,1.0.0.2"
+nmcli connection modify "$temp_var" ipv4.ignore-auto-dns yes
 ```
 
 
@@ -60,7 +61,7 @@ systemctl reboot
 ```
 
 
-## Stage 0010
+## Stage 0001
 
 ### Upgrade packages
 
@@ -76,7 +77,7 @@ systemctl reboot
 ```
 
 
-## Stage 0011
+## Stage 0010
 
 
 ### Install GNOME extensions
@@ -96,7 +97,7 @@ A few extensions:
 ### Install packages
 
 ```bash
-sudo apt-get install adb alacritty aria2 autoconf barrier bat bc bison bridge-utils btop build-essential cifs-utils cmake cmatrix crossbuild-essential-armhf curl ethtool exfat-fuse exfat-utils fakeroot fastboot fdisk ffmpeg flex fonts-firacode fonts-fork-awesome gdb-multiarch git handbrake hdparm htop imagemagick iotop iperf iperf3 libc6-dev libelf-dev libncurses-dev libncurses5-dev libnotify-bin libpam-google-authenticator libssl-dev libvirt-clients libvirt-daemon-system linux-headers-5.16.19-76051619-generic linux-headers-$(uname -r) linux-tools-$(uname -r) linux-tools-common linux-tools-generic locate lsb-release make mediainfo mlocate mpv ncurses-dev neofetch neovim nethogs nload nodejs nvme-cli obs-plugins obs-studio openocd openssh-client openssh-server python3 python3-pip qemu qemu-efi-aarch64 qemu-efi-arm qemu-kvm qemu-system-arm qemu-system-x86 qemu-utils rar ripgrep rsync smartmontools speedtest-cli tar thunderbird tmux transmission-cli tree unrar unzip valgrind vim virt-manager vlc wakeonlan webp wget xsel xz-utils yt-dlp zfs-dkms zip zsh zsh-autosuggestions zsh-syntax-highlighting
+sudo apt-get install adb alacritty aria2 autoconf barrier bat bc bison bridge-utils btop build-essential cifs-utils cmake cmatrix crossbuild-essential-armhf curl ethtool exfat-fuse fakeroot fastboot fdisk ffmpeg flex fonts-firacode fonts-fork-awesome gdb-multiarch git handbrake hdparm htop imagemagick iotop iperf iperf3 libc6-dev libelf-dev libncurses-dev libncurses5-dev libnotify-bin libpam-google-authenticator libssl-dev libvirt-clients libvirt-daemon-system linux-headers-$(uname -r)-generic linux-headers-$(uname -r) linux-tools-$(uname -r) linux-tools-common linux-tools-generic locate lsb-release make mediainfo mlocate mpv neofetch neovim nethogs nload nodejs nvme-cli obs-plugins obs-studio openocd opensbi openssh-client openssh-server python3 python3-pip qemu qemu-efi-aarch64 qemu-efi-arm qemu-kvm qemu-system-arm qemu-system-misc qemu-system-x86 qemu-utils rar ripgrep rsync smartmontools speedtest-cli tar thunderbird tmux transmission-cli tree u-boot-qemu unrar unzip valgrind vim virt-manager vlc wakeonlan webp wget xsel xz-utils yt-dlp zfs-dkms zip zsh zsh-autosuggestions zsh-syntax-highlighting
 ```
 
 **linux-headers-$(uname -r) linux-tools-$(uname -r)**
@@ -161,7 +162,11 @@ gsettings set org.gnome.desktop.default-applications.terminal exec '/usr/bin/ala
 sudo update-alternatives --config x-terminal-emulator
 ```
 
-## Stage 0100: Window Manager (bspwm)
+### Don't crawl specific directories with updatedb
+
+**Add `/heathen_disk/personal/media/camera_roll` to the `PRUNEPATHS` value in `/etc/updatedb.conf`.**
+
+## Stage 0011: Window Manager (bspwm)
 
 ### Use `$HOME/.xinitrc` for starting bspwm from GDM
 
@@ -191,7 +196,7 @@ ADd the following line to `/etc/alternatives/google-chrome`
 exec -a "$0" "$HERE/chrome" "$@" --force-device-scale-factor=1.25
 ```
 
-## Stage 0101: Sublime Text 3
+## Stage 0100: Sublime Text 3
 
 ### Install extensions
 
@@ -233,3 +238,70 @@ Preferences > Key bindings
 	{"keys": ["ctrl+tab"], "command": "next_view"},
 	{"keys": ["ctrl+shift+tab"], "command": "prev_view"},
 ```
+
+## Stage 0101: ZFS Setup
+
+### Create zpool
+
+```
+sudo zpool create -o ashift=12 bhugol raidz1 /dev/sda /dev/sdb /dev/sdc /dev/sdd
+```
+
+### Set global zpool properties
+
+```
+sudo zfs set atime=off bhugol
+sudo zfs set checksum=sha512 bhugol
+sudo zfs set compression=zstd-19 bhugol
+sudo zfs set primarycache=all bhugol
+sudo zfs set recordsize=1M bhugol
+sudo zfs set snapdir=hidden bhugol
+sudo zfs set xattr=sa bhugol
+```
+
+### Create ZFS datasets
+
+```
+sudo zfs create bhugol/media
+sudo zfs create bhugol/media/camera_roll
+sudo zfs create bhugol/media/movies
+sudo zfs create bhugol/media/tv_series
+
+sudo zfs create bhugol/backup
+sudo zfs create bhugol/backup/balaji
+sudo zfs create bhugol/backup/adinath
+sudo zfs create bhugol/backup/vidhata
+sudo zfs create bhugol/backup/harinarayan
+sudo zfs create bhugol/backup/barbet
+
+sudo zpool export bhugol
+
+sudo zpool import	*trial run to get the pool-id*
+sudo zpool import -d /dev/disk/by-id <pool-id>
+```
+
+### Own your mount points
+
+```
+sudo chown pratham:pratham -vR /bhugol
+```
+
+### Add bi-monthly cron job for ZFS scrub
+
+`sudo crontab -e`
+
+```bash
+0 0 1,15 * * /usr/sbin/zpool scrub bhugol
+```
+
+### Set ZFS parameters
+
+`sudoedit /etc/modprobe.d/zfs.conf`
+
+```
+options zfs zfs_scan_idle = 0
+options zfs zfs_scrub_delay = 0
+options zfs zfs_scan_min_time_ms = 5000
+```
+
+
