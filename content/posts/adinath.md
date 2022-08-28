@@ -115,7 +115,7 @@ sudo reboot +0
 ### Install packages
 
 ```bash
-sudo apt-get install apache2 aria2 bat bc cifs-utils cmatrix curl exfat-fuse exfat-utils fd-find ffmpeg findutils git glances hdparm htop iotop iperf3 jq libpam-google-authenticator locate mediainfo mpv neofetch neovim nload openssh-server python3 python3-pip rename rsync samba samba-common-bin smartmontools speedtest-cli tldr tmux transmission-cli transmission-common transmission-daemon tree unrar unzip valgrind vim webp wget wireguard xz-utils yt-dlp zfs-dkms zip zsh zsh-autosuggestions zsh-syntax-highlighting
+sudo apt-get install apache2 aria2 bat bc cifs-utils cmatrix curl exfat-fuse exfat-utils fd-find ffmpeg findutils git glances hdparm htop iotop iperf3 jq libpam-google-authenticator locate mediainfo mpv neofetch neovim nload openssh-server python3 python3-pip rename rsync samba samba-common-bin smartmontools speedtest-cli tldr tmux transmission-cli transmission-common transmission-daemon tree unrar unzip valgrind vim webp wget wget2 wireguard xz-utils yt-dlp zfs-dkms zip zsh zsh-autosuggestions zsh-syntax-highlighting
 
 chsh -s $(which zsh) $(whoami)
 ```
