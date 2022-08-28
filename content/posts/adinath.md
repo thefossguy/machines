@@ -81,7 +81,7 @@ arm_freq=2000
 
 ```bash
 cd $HOME/.ssh
-ssh-keygen -t ed25519 -f balaji
+ssh-keygen -t ed25519 -f balakrishna
 ssh-keygen -t ed25519 -f gitea
 ssh-keygen -t ed25519 -f github
 ssh-keygen -t ed25519 -f gitlab

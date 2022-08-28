@@ -48,7 +48,7 @@ sudo systemctl enable nvidia-suspend nvidia-hibernate nvidia-resume
 ```bash
 cd $HOME/.ssh
 ssh-keygen -t ed25519 -f adinath
-ssh-keygen -t ed25519 -f balaji
+ssh-keygen -t ed25519 -f balakrishna
 ssh-keygen -t ed25519 -f gitea
 ssh-keygen -t ed25519 -f github
 ssh-keygen -t ed25519 -f gitlab
@@ -268,7 +268,7 @@ sudo zfs create bhugol/media/movies
 sudo zfs create bhugol/media/tv_series
 
 sudo zfs create bhugol/backup
-sudo zfs create bhugol/backup/balaji
+sudo zfs create bhugol/backup/balakrishna
 sudo zfs create bhugol/backup/adinath
 sudo zfs create bhugol/backup/vidhata
 sudo zfs create bhugol/backup/harinarayan
