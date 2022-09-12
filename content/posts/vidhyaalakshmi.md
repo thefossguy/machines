@@ -1,6 +1,6 @@
 ---
 
-title: "Setup vidhyaa (Debian: Router)"
+title: "Setup vidhyaalakshmi (Router)"
 date: 2022-07-23T08:00:00+05:30
 draft: false
 toc: true
@@ -12,7 +12,7 @@ toc: true
 ### Set hostname
 
 ```bash
-sudo hostnamectl set-hostname vidhyaa
+sudo hostnamectl set-hostname vidhyalakshmi
 ```
 
 ### Set timezone
