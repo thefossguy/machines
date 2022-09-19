@@ -461,7 +461,8 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 # [[ if zpool scrub is not running ]]
 #   -> [[ if containers are not running ]]
 #     -> start containers
-* * * * * bash /home/pratham/.scripts/cron/pratham/maintenance.sh
+*/5 * * * * bash /home/pratham/.scripts/cron/pratham/maintenance.sh
+*/5 * * * * podman exec -u www-data nextcloud-govinda php cron.php
 ```
 
 
