@@ -1,6 +1,6 @@
 ---
 
-title: "Setup harinarayan (Pop OS)"
+title: "Setup flameboi (Pop OS)"
 date: 2022-07-23T08:00:00+05:30
 draft: false
 toc: true
@@ -13,7 +13,7 @@ toc: true
 ### Set hostname
 
 ```bash
-sudo hostnamectl set-hostname harinarayan
+sudo hostnamectl set-hostname flameboi
 ```
 
 
@@ -47,11 +47,11 @@ sudo systemctl enable nvidia-suspend nvidia-hibernate nvidia-resume
 
 ```bash
 cd $HOME/.ssh
-ssh-keygen -t ed25519 -f adinath
-ssh-keygen -t ed25519 -f balakrishna
+ssh-keygen -t ed25519 -f bluefeds
 ssh-keygen -t ed25519 -f gitea
 ssh-keygen -t ed25519 -f github
 ssh-keygen -t ed25519 -f gitlab
+ssh-keygen -t ed25519 -f sentinel
 ```
 
 ### Reboot
@@ -97,7 +97,7 @@ A few extensions:
 ### Install packages
 
 ```bash
-sudo apt-get install adb alacritty aria2 autoconf barrier bat bc bison bridge-utils btop build-essential cifs-utils cmake cmatrix crossbuild-essential-armhf curl ethtool exfat-fuse fakeroot fastboot fdisk ffmpeg flex fonts-firacode fonts-fork-awesome gdb-multiarch git handbrake hdparm htop imagemagick iotop iperf iperf3 libc6-dev libelf-dev libncurses-dev libncurses5-dev libnotify-bin libpam-google-authenticator libssl-dev libvirt-clients libvirt-daemon-system linux-headers-generic linux-headers-$(uname -r) linux-tools-$(uname -r) linux-tools-common linux-tools-generic locate lsb-release make mediainfo mlocate mpv neofetch neovim nethogs nload nodejs nvme-cli obs-plugins obs-studio openocd opensbi openssh-client openssh-server python3 python3-pip qemu qemu-efi-aarch64 qemu-efi-arm qemu-kvm qemu-system-arm qemu-system-misc qemu-system-x86 qemu-utils rar ripgrep rsync signify-openbsd smartmontools speedtest-cli tar thunderbird tmux transmission-cli tree u-boot-qemu unrar unzip valgrind vim virt-manager vlc wakeonlan webp wget wget2 xsel xz-utils yt-dlp zfs-dkms zip zsh zsh-autosuggestions zsh-syntax-highlighting
+sudo apt-get install adb alacritty aria2 autoconf barrier bat bc bison bridge-utils btop build-essential cifs-utils cmake cmatrix crossbuild-essential-armhf curl ethtool exfat-fuse fakeroot fastboot fdisk ffmpeg flex fonts-firacode fonts-fork-awesome gdb-multiarch git handbrake hdparm htop imagemagick iotop iperf iperf3 libc6-dev libelf-dev libncurses-dev libncurses5-dev libnotify-bin libpam-google-authenticator libssl-dev libvirt-clients libvirt-daemon-system linux-headers-generic linux-headers-$(uname -r) linux-tools-$(uname -r) linux-tools-common linux-tools-generic locate lsb-release make mediainfo meld mlocate mpv neofetch neovim nethogs nload nodejs nvme-cli obs-plugins obs-studio openocd opensbi openssh-client openssh-server python3 python3-pip qemu qemu-efi-aarch64 qemu-efi-arm qemu-kvm qemu-system-arm qemu-system-misc qemu-system-x86 qemu-utils rar ripgrep rsync signify-openbsd smartmontools speedtest-cli tar thunderbird tmux transmission-cli tree u-boot-qemu unrar unzip valgrind vim virt-manager vlc wakeonlan webp wget wget2 xsel xz-utils yt-dlp zfs-dkms zip zsh zsh-autosuggestions zsh-syntax-highlighting
 ```
 
 **linux-headers-$(uname -r) linux-tools-$(uname -r)**
@@ -119,11 +119,16 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 **Open `nvim` and type `:PlugInstall`**
 
 
-### Install rustup
+### Rust setup
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup component add rust-analysis rust-src
+
+rustup default stable
+rustup component add rust-src rust-analyzer
+#rustup component add rust-analysis
+
+cargo install cargo-outdated cargo-tree
 ```
 
 ### Flatpak
@@ -268,11 +273,11 @@ sudo zfs create bhugol/media/movies
 sudo zfs create bhugol/media/tv_series
 
 sudo zfs create bhugol/backup
-sudo zfs create bhugol/backup/balakrishna
-sudo zfs create bhugol/backup/adinath
-sudo zfs create bhugol/backup/vidhata
-sudo zfs create bhugol/backup/harinarayan
 sudo zfs create bhugol/backup/barbet
+sudo zfs create bhugol/backup/bluefeds
+sudo zfs create bhugol/backup/flameboi
+sudo zfs create bhugol/backup/ringmaster
+sudo zfs create bhugol/backup/sentinel
 
 sudo zpool export bhugol
 

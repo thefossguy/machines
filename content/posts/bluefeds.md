@@ -1,6 +1,6 @@
 ---
 
-title: "Setup balakrishna (Fedora Server arm64)"
+title: "Setup bluefeds (Fedora Server arm64)"
 date: 2022-07-23T08:00:30+05:30
 draft: false
 toc: true
@@ -33,7 +33,7 @@ sudo eject /dev/XXX
 ### Set hostname
 
 ```bash
-sudo hostnamectl set-hostname balakrishna
+sudo hostnamectl set-hostname bluefeds
 ```
 
 
@@ -113,11 +113,11 @@ sudo grubby --remove-args=rhgb --update-kernel=ALL
 
 ```bash
 cd $HOME/.ssh
-ssh-keygen -t ed25519 -f adinath
+ssh-keygen -t ed25519 -f flameboi
 ssh-keygen -t ed25519 -f gitea
 ssh-keygen -t ed25519 -f github
 ssh-keygen -t ed25519 -f gitlab
-ssh-keygen -t ed25519 -f harinarayan
+ssh-keygen -t ed25519 -f sentinel
 ssh-keygen -t ed25519 -f zfs
 ```
 

@@ -138,8 +138,8 @@ LAN_INTERFACE= #vio1 in VM
 
 ```bash
 fw_update
-pkg_check -Fimv
 pkg_add -imUuVv
+pkg_check -Fimv
 sysupgrade
 ```
 
@@ -153,7 +153,7 @@ ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 
 ### SSH Config
 ```bash
-echo "ListenAddress 10.0.0.1" >> /etc/ssh/sshd_config
+#echo "ListenAddress 10.0.0.1" >> /etc/ssh/sshd_config
 ```
 
 ### Doas setup
@@ -178,7 +178,7 @@ pkg_add -imUuVv bash bash-completion curl git htop iftop iperf iperf3 pftop vim-
 
 Heavily inspired by the official [OpenBSD documentation](https://www.openbsd.org/faq/pf/example1.html)/guide.
 
-### Setup networking
+### Setup IP addresses for WAN and LAN interfaces
 
 Use the `10.0.0.0/8` subnet for `$WAN_INTERFACE`.
 
@@ -195,19 +195,29 @@ inet6 autoconf"
 LAN_IF_CONF="inet 10.0.0.1 255.0.0.0 10.0.0.255"
 ```
 
+```bash
+echo ${WAN_IF_CONF} > /etc/hostname.${WAN_INTERFACE}
+echo ${LAN_IF_CONF} > /etc/hostname.${LAN_INTERFACE}
+```
+
+### Enable IP Forwarding
+
+#### IPv4
 
 ```bash
 echo 'net.inet.ip.forwarding=1' >> /etc/sysctl.conf
-# IPv6 $(echo "net.inet6.ip6.forwarding=1" >> /etc/sysctl.conf)
-echo ${WAN_IF_CONF} > /etc/hostname.${WAN_INTERFACE}
-echo ${LAN_IF_CONF} > /etc/hostname.${LAN_INTERFACE}
+```
+#### IPv6
+
+```
+echo "net.inet6.ip6.forwarding=1" >> /etc/sysctl.conf
 ```
 
 ### DHCP
 
 ```bash
 rcctl enable dhcpd
-rcctl set dhcpd flags em1 athn0
+rcctl set dhcpd flags ${LAN_INTERFACE}
 ```
 
 ```bash
@@ -238,13 +248,13 @@ subnet 10.0.0.0 netmask 255.255.255.0 {
 
 
     # static LAN IP for my MBP (Wi-Fi)
-	host vidhata {
+	host ringmaster {
 		fixed-address 10.0.0.21;
 		hardware ethernet 00:00:00:00:00:00;
 	}
 
     # static LAN IP for my Desktop/Workstation
-	host harinarayan {
+	host flameboi {
 		fixed-address 10.0.0.22;
 		hardware ethernet 00:00:00:00:00:00;
 	}
@@ -257,13 +267,13 @@ subnet 10.0.0.0 netmask 255.255.255.0 {
 
 
     # static LAN IP for my Raspberry Pi 4 Model B 4GB
-	host adinath {
+	host sentinel {
 		fixed-address 10.0.0.31;
 		hardware ethernet 00:00:00:00:00:00;
 	}
 
     # static LAN IP for my Raspberry Pi 4 Model B 8GB
-	host balakrishna {
+	host bluefeds {
 		fixed-address 10.0.0.32;
 		hardware ethernet 00:00:00:00:00:00;
 	}
@@ -276,26 +286,26 @@ subnet 10.0.0.0 netmask 255.255.255.0 {
 	}
 }
 
-# IoT devices go on this subnet; extra WAP, Android set-top box, etc...
-subnet 10.0.10.0 netmask 255.255.255.0 {
-	option routers 10.0.10.1;
-	option domain-name-servers 10.0.10.1;
-	range 10.0.10.10 10.0.10.100;
-
-
-    # static LAN IP for my Android set top box
-	host vibhishan {
-		fixed-address 10.0.10.11;
-		hardware ethernet 00:00:00:00:00:00;
-	}
-
-
-    # static LAN IP for my guest WAP
-	host ketu {
-		fixed-address 10.0.10.90;
-		hardware ethernet 00:00:00:00:00:00;
-	}
-}
+## IoT devices go on this subnet; extra WAP, Android set-top box, etc...
+#subnet 10.0.10.0 netmask 255.255.255.0 {
+#	option routers 10.0.10.1;
+#	option domain-name-servers 10.0.10.1;
+#	range 10.0.10.10 10.0.10.100;
+#
+#
+#    # static LAN IP for my Android set top box
+#	host vibhishan {
+#		fixed-address 10.0.10.11;
+#		hardware ethernet 00:00:00:00:00:00;
+#	}
+#
+#
+#    # static LAN IP for my guest WAP
+#	host ketu {
+#		fixed-address 10.0.10.90;
+#		hardware ethernet 00:00:00:00:00:00;
+#	}
+#}
 "
 ```
 
@@ -322,37 +332,24 @@ WAN_IF = "${WAN_INTERFACE}"
 # network hosts; look at "/etc/dhcpd.conf" for what they are
 host_barbet = "10.0.0.11"
 host_merlin = "10.0.0.12"
-host_vince = "10.0.0.13"
-
-host_vidhata = "10.0.0.21"
-host_harinarayan = "10.0.0.22"
+host_ringmaster = "10.0.0.21"
+host_flameboi = "10.0.0.22"
 host_bramha = "10.0.0.23"
-
-host_adinath = "10.0.0.31"
-host_balakrishna = "10.0.0.32"
-
+host_sentinel = "10.0.0.31"
+host_bluefeds = "10.0.0.32"
 host_rahu = "10.0.0.90"
-host_ketu = "10.0.10.11"
 
-host_vibhishan = "10.0.10.90"
+#host_vince = "10.0.0.13"
+#host_ketu = "10.0.10.11"
+#host_vibhishan = "10.0.10.90"
+#host_ = "10."
 
-host_pappa = "10.0.10."
-host_mummy = "10.0.10."
-host_kaki = "10.0.10."
-host_kaka = "10.0.10."
-host_baa = "10.0.10."
-host_dada = "10.0.10."
-host_ = "10.0.10."
-host_ = "10.0.10."
-host_ = "10.0.10."
-#host_ = "10.0.0."
-#host_ = "10.0.0."
-#host_ = "10.0.0."
-#host_ = "10.0.0."
-#host_ = "10.0.0."
-hosts_protected "{" $host_barbet $host_merlin $host_vidhata $host_harinarayan $host_adinath $host_balakrishna $ "}"
-hosts_known_guests "{" $host_vince $host_rahu $host_ketu "}"
-hosts_totally_isolated "{" $host_vibhishan "}"
+hosts_allow_ssh = "{" $host_ringmaster $host_flameboi $host_bramha $host_bluefeds "}"
+hosts_protected = "{" $host_barbet $host_merlin $host_ringmaster $host_flameboi $host_sentinel $host_bluefeds "}"
+hosts_known_guests = "{" $host_rahu "}"
+
+#hosts_known_guests = "{" $host_vince $host_rahu $host_ketu "}"
+#hosts_totally_isolated = "{" $host_vibhishan "}"
 
 # table for blocking IP addresses
 # yet to be populated
@@ -370,13 +367,31 @@ set block-policy drop
 # block everything
 block drop all
 
+# activate spoofing protection for all interfaces
+block in quick from urpf-failed
+
+# only allow ssh connections from the local network if it's from the
+# $host_allow_ssh hosts. use "block return" so that a TCP RST is
+# sent to close blocked connections right away. use "quick" so that this
+# rule is not overridden by the "pass" rules below.
+block return in quick on $LAN_IF proto tcp from ! $hosts_allow_ssh to $LAN_IF port ssh
+
 # passing packets LAN <-> LAN
-pass in on $LAN_IF from $LAN_IF:network to any keep state
+# this is not needed now, since I have only one LAN interface
+# the switch will do this
+#pass in on $LAN_IF from $LAN_IF:network to any keep state
+
 # allow OpenBSD to connect to the internet (package management, etc)
 # pass WAN network to WAN without modification
 pass out on $WAN_IF from $WAN_IF:network to any keep state
+
 # pass LAN network OUT to WAN using Network Address Translation
 pass out on $WAN_IF from $LAN_IF:network to any nat-to ($WAN_IF) keep state
+#pass out on $WAN_IF proto { tcp, udp, icmp } from $LAN_IF:network to any nat-to ($WAN_IF) modulate state
+
+# pass tcp, udp, and icmp out on the external (internet) interface.
+# tcp connections will be modulated, udp/icmp will be tracked statefully.
+pass out on $WAN_IF proto { tcp udp icmp } all modulate state
 "
 ```
 
