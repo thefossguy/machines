@@ -451,18 +451,15 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 ### user crontab
 
 ```bash
-# a zfs scrub takes place on the first Friday of every month
-# this is done at 21:00 hours
-# so stop all containers before the scrub takes place
-# DON'T DO THIS THO
-#55 20 * * 5 [ $(date +\%d) -le 07 ] && systemctl --user stop container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma container-transmission-raadhe
+# check if containers are running or not; restart if stopped
+*/5 * * * * bash /home/pratham/.scripts/_bluefeds/cron/pratham/maintenance.sh >/dev/null 2>&1
 
-# maintenance script
-# [[ if zpool scrub is not running ]]
-#   -> [[ if containers are not running ]]
-#     -> start containers
-*/5 * * * * bash /home/pratham/.scripts/cron/pratham/maintenance.sh
-*/5 * * * * podman exec -u www-data nextcloud-govinda php cron.php
+# run Nextcloud cron
+*/5 * * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/cron.php >/dev/null 2>&1
+
+# Nextcloud: scan files for all users and perform cleanup
+10 */2 * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/occ files:scan --all >/dev/null 2>&1
+40 */2 * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/occ files:cleanup >/dev/null 2>&1
 ```
 
 
@@ -470,16 +467,16 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 
 ```bash
 # update fs database every 6 hours
-* */6 * * * updatedb
+* */6 * * * updatedb >/dev/null 2>&1
 
-# create zfs snapshot of `nextcloud` volume every Friday
-0 0 * * 5 bash /home/pratham/.scripts/cron/root/zfs-bak.sh
+# create zfs snapshots every Friday
+0 0 * * 5 bash /home/pratham/.scripts/cron/root/zfs-bak.sh >/dev/null 2>&1
 
 # start scrub
 # on the first Friday of every month
 # at 2100 hours
-0 21 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub
+0 21 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub >/dev/null 2>&1
 
 # maintenance script
-#0 20 * * * bash /home/pratham/.scripts/cron/root/maintenance.sh
+#0 20 * * * bash /home/pratham/.scripts/cron/root/maintenance.show
 ```

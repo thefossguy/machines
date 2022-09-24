@@ -43,6 +43,7 @@ sudo systemctl enable nvidia-suspend nvidia-hibernate nvidia-resume
 # sudo apt install system76-driver-nvidia
 ```
 
+
 ### Generate SSH keys
 
 ```bash
