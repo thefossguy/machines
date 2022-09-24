@@ -161,7 +161,7 @@ sudo reboot +0
 ### Install packages
 
 ```bash
-sudo dnf install aardvark-dns aria2 bat btop buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools mediainfo neovim nload nodejs openssh-server overpass-mono-fonts perl-Digest-SHA podman podman-compose qemu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools ssmtp tmux tree unrar unzip util-linux-user vim-enhanced wget wget2 yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
+sudo dnf install aardvark-dns aria2 bat btop buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools mediainfo neovim nload openssh-server overpass-mono-fonts perl-Digest-SHA podman podman-compose qemu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools ssmtp tmux tree unrar unzip util-linux-user vim-enhanced wget wget2 yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
 
 # sudo dnf install plocate
 # sudo dnf install qemu-device-display-virtio-gpu
