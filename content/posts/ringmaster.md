@@ -66,6 +66,14 @@ ssh-keygen -t ed25519 -f gitlab
 ssh-keygen -t ed25519 -f sentinel
 ```
 
+### Alacritty setup
+
+```bash
+git clone https://github.com/alacritty/alacritty.git && cd alacritty
+sudo tic -xe alacritty,alacritty-direct extra/alacritty.info && cd .. && rm -rf alacritty
+```
+
+
 ## Extra setup
 
 ### Improve Dock behaviour
