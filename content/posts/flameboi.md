@@ -179,7 +179,35 @@ sudo update-alternatives --config x-terminal-emulator
 
 **Add `/heathen_disk/personal/media/camera_roll` to the `PRUNEPATHS` value in `/etc/updatedb.conf`.**
 
-## Stage 0011: Window Manager (bspwm)
+
+
+## Stage 0011: Cron setup
+
+### `pratham`'s cron
+
+```cron
+# empty for now
+```
+
+### `root`'s cron
+
+```cron
+# empty for now
+```
+
+
+## Stage 0100: Enable services
+
+### Enable HDD-related services
+
+**_Temporarily_ export var `DOTFILES_DIR` pointing to wherever [_dotfiles_](https://git.thefossguy.com/thefossguy/dotfiles) is cloned.**
+
+```bash
+sudo cp -v $DOTFILES_DIR/_OTHER/flameboi/etc/systemd/system/*.service /etc/systemd/system/
+sudo systemctl enable hdd-standby-on-boot.service hdd-standby-on-resume.service
+```
+
+## Stage 0101: Window Manager (bspwm)
 
 ### Use `$HOME/.xinitrc` for starting bspwm from GDM
 
@@ -209,7 +237,7 @@ ADd the following line to `/etc/alternatives/google-chrome`
 exec -a "$0" "$HERE/chrome" "$@" --force-device-scale-factor=1.25
 ```
 
-## Stage 0100: Sublime Text 3
+## Stage 0110: Sublime Text 3
 
 ### Install extensions
 
@@ -252,7 +280,7 @@ Preferences > Key bindings
 	{"keys": ["ctrl+shift+tab"], "command": "prev_view"},
 ```
 
-## Stage 0101: ZFS Setup
+## Stage 0111: ZFS Setup
 
 ### Create zpool
 
@@ -315,15 +343,4 @@ sudo chown pratham:pratham -vR /bhugol
 options zfs zfs_scan_idle = 0
 options zfs zfs_scrub_delay = 0
 options zfs zfs_scan_min_time_ms = 5000
-```
-
-## Enable services
-
-### Enable HDD-related services
-
-**_Temporarily_ export var `DOTFILES_DIR` pointing to wherever [_dotfiles_](https://git.thefossguy.com/thefossguy/dotfiles) is cloned.**
-
-```bash
-sudo cp -v $DOTFILES_DIR/_OTHER/flameboi/etc/systemd/system/*.service /etc/systemd/system/
-sudo systemctl enable hdd-standby-on-boot.service hdd-standby-on-resume.service
 ```
