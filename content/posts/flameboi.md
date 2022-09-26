@@ -111,6 +111,13 @@ sudo apt-get install breeze-cursor-theme bspwm dunst feh gtk-chtheme i3lock-fanc
 echo "gtk-application-prefer-dark-theme=true" | tee $HOME/.config/gtk-3.0/settings.ini
 ```
 
+**_Temporarily_ export var `DOTFILES_DIR` pointing to wherever [_dotfiles_](https://git.thefossguy.com/thefossguy/dotfiles) is cloned.**
+
+```bash
+sudo cp -v $DOTFILES_DIR/_OTHER/flameboi/usr/share/xsessions/bspwm.desktop /usr/share/xsessions/
+```
+
+
 ### vim-plug (Neovim)
 
 ```bash
@@ -310,4 +317,13 @@ options zfs zfs_scrub_delay = 0
 options zfs zfs_scan_min_time_ms = 5000
 ```
 
+## Enable services
 
+### Enable HDD-related services
+
+**_Temporarily_ export var `DOTFILES_DIR` pointing to wherever [_dotfiles_](https://git.thefossguy.com/thefossguy/dotfiles) is cloned.**
+
+```bash
+sudo cp -v $DOTFILES_DIR/_OTHER/flameboi/etc/systemd/system/*.service /etc/systemd/system/
+sudo systemctl enable hdd-standby-on-boot.service hdd-standby-on-resume.service
+```
