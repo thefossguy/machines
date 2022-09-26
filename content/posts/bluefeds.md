@@ -62,7 +62,7 @@ echo "wireguard" | sudo tee /etc/modules-load.d/wireguard.conf
 ### Modify motd
 
 ```bash
-echo "\n# added by PRATHAM\n/home/pratham/.scripts/motd/show_logs.sh" | sudo tee -a /etc/profile
+echo "\n# added by PRATHAM\n/home/pratham/.scripts/_bluefeds/motd/show_logs.sh" | sudo tee -a /etc/profile
 ```
 
 
@@ -470,13 +470,10 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 * */6 * * * updatedb >/dev/null 2>&1
 
 # create zfs snapshots every Friday
-0 0 * * 5 bash /home/pratham/.scripts/cron/root/zfs-bak.sh >/dev/null 2>&1
+0 0 * * 5 bash /home/pratham/.scripts/_bluefeds/cron/root/zfs-bak.sh >/dev/null 2>&1
 
 # start scrub
 # on the first Friday of every month
 # at 2100 hours
 0 21 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub >/dev/null 2>&1
-
-# maintenance script
-#0 20 * * * bash /home/pratham/.scripts/cron/root/maintenance.show
 ```
