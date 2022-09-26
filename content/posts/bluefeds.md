@@ -451,11 +451,17 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 ### user crontab
 
 ```bash
+# always add ">/dev/null 2>&1" at the end of cronjobs
+# to prevnet a `dead.letter` in $HOME/
+
+
 # check if containers are running or not; restart if stopped
 */5 * * * * bash /home/pratham/.scripts/_bluefeds/cron/pratham/maintenance.sh >/dev/null 2>&1
 
+
 # run Nextcloud cron
 */5 * * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/cron.php >/dev/null 2>&1
+
 
 # Nextcloud: scan files for all users and perform cleanup
 10 */2 * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/occ files:scan --all >/dev/null 2>&1
@@ -466,11 +472,17 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 ### root crontab
 
 ```bash
+# always add ">/dev/null 2>&1" at the end of cronjobs
+# to prevnet a `dead.letter` in $HOME/
+
+
 # update fs database every 6 hours
 * */6 * * * updatedb >/dev/null 2>&1
 
+
 # create zfs snapshots every Friday
 0 0 * * 5 bash /home/pratham/.scripts/_bluefeds/cron/root/zfs-bak.sh >/dev/null 2>&1
+
 
 # start scrub
 # on the first Friday of every month

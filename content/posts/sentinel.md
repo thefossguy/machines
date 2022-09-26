@@ -201,45 +201,30 @@ sudo reboot +0
 ### user crontab
 
 ```bash
-# pause torrents as a prep for zfs scrub
-*/10 18 * * 5 [ $(date +\%d) -le 07 ] && bash /home/ubuntu/.scripts/transmission/pause_all.sh
-
-#0 0 * * * bash /home/ubuntu/.scripts/transmission/change_bandwidth_priority.sh
-
-# remove after exam ends
-#*/2 6,7 * * * bash /home/ubuntu/.scripts/transmission/pause_downloading.sh
-#*/20 20 * * * bash /home/ubuntu/.scripts/transmission/resume_all.sh
-
-# maintenance script
-# [[ if zpool scrub is not running ]]
-#   -> [[ if containers are not running ]]
-#     -> start containers
-* * * * * bash /home/ubuntu/.scripts/cron/pratham/maintenance.sh
+# always add ">/dev/null 2>&1" at the end of cronjobs
+# to prevnet a `dead.letter` in $HOME/
 ```
 
 
 ### root crontab
 
 ```bash
-# ZFS snapshots
-#0 * * * * bash /home/ubuntu/.scripts/cronjobs/root/zfs-bak.sh
+# always add ">/dev/null 2>&1" at the end of cronjobs
+# to prevnet a `dead.letter` in $HOME/
+
 
 # start scrub
-# on every first Friday of the month
+# on the first Friday of every month
 # at 1845 hours
-45 18 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub libertine
+45 18 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub libertine >/dev/null 2>&1
 
-# wireguard (ProtonVPN)
-#* * * * * bash /home/ubuntu/.scripts/cronjobs/root/proton-vpn.sh
 
 # backup .torrent files
 # chmod and chown
 # rm .macos files
-30 18 * * * bash /home/ubuntu/.scripts/cronjobs/root/midnight.sh
+30 18 * * * bash /home/ubuntu/.scripts/_sentinel/cron/root/midnight.sh >/dev/null 2>&1
+
 
 # update fs database every 6 hours
-* */6 * * * updatedb
-
-# maintenance script
-#0 20 * * * bash /home/ubuntu/.scripts/cron/root/maintenance.sh
+* */6 * * * updatedb >/dev/null 2>&1
 ```
