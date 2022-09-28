@@ -28,9 +28,9 @@ brew upgrade
 ### Install packages
 
 ```bash
-brew install cask alacritty android-platform-tools balenaetcher bitwarden brave-browser discord firefox homebrew/cask-fonts/font-fira-code homebrew/cask-fonts/font-fira-mono font-overpass-mono google-chrome keepassx keka librewolf macs-fan-control meld obs protonvpn sublime-text telegram tor-browser utm virtualbox virtualbox-extension-pack webtorrent
-
 brew install aria2 bat btop coreutils curl ffmpeg gcc git git-delta gnu-sed grep handbrake htop hugo imagemagick iperf iperf3 mpv neovim qemu readline rename ripgrep speedtest-cli tmux tree wakeonlan watch webp wget xz yt-dlp zsh-fast-syntax-highlighting
+
+brew install cask alacritty android-platform-tools balenaetcher bitwarden brave-browser discord firefox homebrew/cask-fonts/font-fira-code homebrew/cask-fonts/font-fira-mono font-overpass-mono google-chrome keepassx keka librewolf macs-fan-control meld obs protonvpn sublime-text telegram tor-browser utm virtualbox virtualbox-extension-pack whatsapp webtorrent
 
 # brew install cask zoom
 ```
