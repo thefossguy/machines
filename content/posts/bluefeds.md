@@ -360,6 +360,13 @@ mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
 ```
 
 
+### Enable workaround for "root-less containers can't ping hosts"
+
+```bash
+grep net.ipv4.ping_group_range /etc/sysctl.conf || echo "net.ipv4.ping_group_range=0 $(grep pratham /etc/subuid | awk -F ":" '{print $2 + $3}')" | sudo tee -a /etc/sysctl.conf
+```
+
+
 ### Hugo
 
 ```bash
