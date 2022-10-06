@@ -1,7 +1,7 @@
 ---
 
 title: "Setup vidhyaalakshmi (Router)"
-date: 2022-07-23T08:00:00+05:30
+date: 2022-07-23T08:00:40+05:30
 draft: false
 toc: true
 

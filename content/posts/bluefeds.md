@@ -102,6 +102,10 @@ echo -ne "\nmax_parallel_downloads=20\nlog_compress=True\nfastestmirror=False" |
 # If GNOME is being used, update `core` too
 #sudo dnf group update core
 
+# epel for CentOS
+#sudo dnf config-manager --set-enabled crb
+#sudo dnf install epel-release epel-next-release -y
+
 
 sudo dnf clean all
 ```
