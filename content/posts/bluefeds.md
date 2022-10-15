@@ -329,12 +329,12 @@ sudo firewall-cmd --list-ports
 ### Pull images
 
 ```bash
-sleep 60 && podman pull lscr.io/linuxserver/transmission:latest
-sleep 60 && podman pull docker.io/gitea/gitea:latest
-sleep 60 && podman pull docker.io/klakegg/hugo:alpine
+sleep 60 && podman pull docker.io/library/postgres:14-alpine
 sleep 60 && podman pull docker.io/library/caddy:alpine
+sleep 60 && podman pull docker.io/klakegg/hugo:ext-debian
 sleep 60 && podman pull docker.io/library/nextcloud:production
-sleep 60 && podman pull docker.io/library/postgres:alpine
+sleep 60 && podman pull docker.io/klakegg/hugo:alpine
+sleep 60 && podman pull docker.io/gitea/gitea:latest
 ```
 
 
@@ -458,12 +458,10 @@ podman generate systemd -f --name hugo-mahayogi --new
 podman generate systemd -f --name hugo-vaikunthnatham --new
 podman generate systemd -f --name nextcloud-chitragupta --new
 podman generate systemd -f --name nextcloud-govinda --new
-podman generate systemd -f --name nextcloud-karma --new
-podman generate systemd -f --name transmission-raadhe --new
 
 systemctl --user daemon-reload
 
-systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda container-nextcloud-karma container-transmission-raadhe
+systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda
 ```
 
 ---
