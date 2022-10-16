@@ -67,5 +67,5 @@ sudo zfs allow -u USER compression,mountpoint,create,mount,receive POOL
 
 ```zfs
 sudo zfs snapshot <vol>@sendtest
-zfs sent -v <vol>@sendtest | ssh hostname.localdomain zfs receive <pool>/backups/<vol-name>
+zfs send -v <vol>@sendtest | ssh hostname.localdomain zfs receive <pool>/backups/<vol-name>
 ```
