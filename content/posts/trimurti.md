@@ -149,7 +149,8 @@ apt install -y meld
 apt install -y autoconf bc bison build-essential cmake fakeroot flex gdb-multiarch libc6-dev libelf-dev libncurses-dev libssl-dev make openocd
 
 # virtualisation
-apt install -y libvirt-clients libvirt-daemon-kvm libvirt-daemon-system qemu-efi-aarch64 qemu-system qemu-system-common qemu-system-gui qemu-system-misc qemu-user qemu-user-static qemu-utils
+apt install -y libvirt-clients libvirt-daemon-system qemu-efi-aarch64 qemu-system qemu-system-common qemu-system-gui qemu-system-misc qemu-user qemu-user-static qemu-utils
+#libvirt-daemon-kvm
 
 # network filesystems
 apt install -y cifs-utils nfs-utils
