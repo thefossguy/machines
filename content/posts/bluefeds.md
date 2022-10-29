@@ -103,9 +103,8 @@ echo -ne "\nmax_parallel_downloads=20\nlog_compress=True\nfastestmirror=False" |
 #sudo dnf group update core
 
 # epel for CentOS
-#sudo dnf config-manager --set-enabled crb
-#sudo dnf install epel-release epel-next-release -y
-
+sudo dnf config-manager --set-enabled crb
+sudo dnf install epel-release epel-next-release -y
 
 sudo dnf clean all
 ```
@@ -146,13 +145,6 @@ sudo reboot +0
 ### Upgrade packages
 
 ```bash
-# Fedora Server
-sudo dnf --refresh update
-
-# RHEL clone (Rocky Linux 9)
-sudo dnf --refresh update
-sudo dnf config-manager --set-enabled crb
-sudo dnf install epel-release
 sudo dnf --refresh update
 ```
 
@@ -171,15 +163,15 @@ sudo reboot +0
 ### Install packages
 
 ```bash
-sudo dnf install aardvark-dns aria2 bat btop buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools mediainfo neovim nfs-utils nload openssh-server overpass-mono-fonts perl-Digest-SHA podman podman-compose qemu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools ssmtp tmux tree unrar unzip util-linux-user vim-enhanced wget wget2 yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
+# Fedora
+sudo dnf install aardvark-dns aria2 bat btop bind-utils buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools mediainfo neovim nfs-utils nload openssh-server overpass-mono-fonts perl-Digest-SHA plocate podman podman-compose qemu qemu-device-display-virtio-gpu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools ssmtp tmux tree unrar unzip util-linux-user vim-enhanced wget wget2 yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
 
-# sudo dnf install plocate
-# sudo dnf install qemu-device-display-virtio-gpu
+# RHEL
+# aria2 bat buildah fd-find git-delta libvirt-daemon-kvm libwebp-tools overpass-mono-fonts qemu qemu-kvm qemu-kvm-core ripgrep skim ssmtp wget2 zsh-syntax-highlighting
+# nfs-utils qrencode-libs samba-common
+sudo dnf install aardvark-dns btop bind-utils cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl git hd-idle hdparm htop iotop mediainfo neovim nload openssh-server perl-Digest-SHA podman podman-compose rsync slirp4netns smartmontools tmux tree unrar unzip util-linux-user vim-enhanced wget yt-dlp yt-dlp-zsh-completion zsh
 
 chsh -s $(which zsh) $(whoami)
-
-# RHEL clone (Rocky Linux) only
-sudo dnf module install container-tools
 ```
 
 
@@ -223,9 +215,11 @@ git clone --depth 1 --branch <latest_tag_name> https://github.com/openzfs/zfs
 # Fedora Server
 sudo dnf install autoconf automake dkms elfutils-libelf-devel gcc git kernel-doc kernel-devel-$(uname -r) kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make ncompress openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
 
-# RHEL clone (Rocky Linux)
-sudo dnf install gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel libuuid-devel libudev-devel openssl-devel zlib-devel libaio-devel libattr-devel elfutils-libelf-devel python3 python3-devel python3-setuptools python3-cffi raspberrypi2-kernel4-devel libffi-devel git ncompress libcurl-devel bind-utils tree podman cockpit-podman podman-compose
-sudo dnf install --enablerepo=epel --enablerepo=powertools python3-packaging dkms
+# RHEL-mainline-kernel
+sudo dnf install gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel libuuid-devel libudev-devel openssl-devel zlib-devel libaio-devel libattr-devel elfutils-libelf-devel kernel-devel-matched python3 python3-devel python3-setuptools python3-cffi libffi-devel git libcurl-devel python3-packaging dkms bind-utils
+
+# RHEL-raspi-kernel
+sudo dnf install gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel libuuid-devel libudev-devel openssl-devel zlib-devel libaio-devel libattr-devel elfutils-libelf-devel python3 python3-devel python3-setuptools python3-cffi raspberrypi2-kernel4-devel libffi-devel ncompress libcurl-devel python3-packaging dkms bind-utils
 
 cd zfs
 sh autogen.sh
@@ -260,7 +254,7 @@ sudo zpool set cachefile=/etc/zfs/zpool.cache trayimurti
 ### Creating a new zpool?
 
 ```bash
-sudo zpool create -o ashift=12 trayimurti /dev/sda
+sudo zpool create -o ashift=12 -o autotrim=on trayimurti /dev/sda
 
 sudo zfs set atime=off trayimurti
 sudo zfs set primarycache=all trayimurti
