@@ -153,7 +153,7 @@ apt install -y libvirt-clients libvirt-daemon-system qemu-efi-aarch64 qemu-syste
 #libvirt-daemon-kvm
 
 # network filesystems
-apt install -y cifs-utils nfs-utils
+apt install -y cifs-utils nfs-common nfs-kernel-server nfswatch
 # try to use NFS
 #apt install -y samba samba-common samba-common-bin
 
