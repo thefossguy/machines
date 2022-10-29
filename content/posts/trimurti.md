@@ -79,6 +79,14 @@ reboot +0
 
 ### apt configuration
 
+`sudo` is not needed, switch to `doas`
+
+```bash
+echo "Package: sudo
+Pin: release *
+Pin-Priority: -1" | tee /etc/apt/preferences.d/90_sudo
+```
+
 ```bash
 echo "# this file was edited by Pratham Patel
 
@@ -428,8 +436,27 @@ systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta 
 
 ---
 
+## Stage 0111: sharing zpool
 
-## Stage 0111: cron
+### exports
+
+[docs](https://manpages.debian.org/testing/nfs-kernel-server/exports.5.en.html)
+
+Add the following lines to the `/etc/exports` file:
+
+```
+/brahmaand 10.0.0.0/8(ro,insecure,subtree_check,crossmnt)
+```
+
+Then, export it.
+
+```bash
+sudo exportfs -rva
+```
+
+---
+
+## Stage 1000: cron
 
 ### user crontab
 
