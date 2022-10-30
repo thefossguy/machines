@@ -174,7 +174,7 @@ DEBIAN_FRONTEND=noninteractive apt install -y zfs-dkms zfs-zed zfsutils-linux
 ### Add user
 
 ```bash
-useradd -m -G adm,games,sys,systemd-journal,uucp,sudo -s /bin/zsh pratham
+useradd -m -G adb,audio,cdrom,dip,floppy,games,netdev,plugdev,sys,systemd-journal,uucp,video -s $(which zsh) pratham
 usermod --password $(echo asdf | openssl passwd -1 -stdin) pratham
 passwd -e pratham
 
