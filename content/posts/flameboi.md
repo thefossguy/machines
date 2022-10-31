@@ -217,7 +217,7 @@ Edit `/usr/share/xsessions/bspwm.desktop`
 [Desktop Entry]
 Name=bspwm
 Comment=Binary space partitioning window manager
-Exec=/home/shivoham/.xinitrc
+Exec=/home/pratham/.xinitrc
 Type=Application
 ```
 
