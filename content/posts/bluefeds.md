@@ -380,10 +380,15 @@ grep net.ipv4.ping_group_range /etc/sysctl.conf || echo "net.ipv4.ping_group_ran
 ### Hugo
 
 ```bash
-git clone git@gitlab.com:shivohamx3/blog.git /trayimurti/containers/volumes/blog
-cd /trayimurti/containers/volumes/blog && git submodule init && git submodule update
-git clone git@gitlab.com:shivohamx3/machines.git /trayimurti/containers/volumes/mach
-cd /trayimurti/containers/volumes/mach && git submodule init && git submodule update
+git clone --recursive git@gitlab.com:thefossguy/blog.git /trayimurti/containers/volumes/blog
+cd /trayimurti/containers/volumes/blog
+git remote rm origin
+git remote add git@git.thefossguy.com:thefossguy/blog.git
+
+git clone --recursive git@gitlab.com:thefossguy/machines.git /trayimurti/containers/volumes/mach
+cd /trayimurti/containers/volumes/mach
+git remote rm origin
+git remote add git@git.thefossguy.com:thefossguy/machines.git
 ```
 
 
