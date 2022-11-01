@@ -21,6 +21,7 @@ Make sure that the install command is the same [from here](https://brew.sh/).
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew analytics off
 brew update
 brew upgrade
 ```
