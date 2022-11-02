@@ -126,7 +126,7 @@ systemctl enable --now NetworkManager.service
 apt install -y btop htop iotop nload iperf iperf3
 
 # containerisation stuff
-apt install -y aardvark-dns bridge-utils podman podman-compose slirp4netns
+apt install -y aardvark-dns bridge-utils podman podman-compose slirp4netns buildah-
 
 # download clients
 apt install -y aria2 wget2
