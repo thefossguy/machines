@@ -204,8 +204,8 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 ### Enable systemd services
 
 ```bash
-sudo systemctl enable cockpit.socket cockpit.service 
-sudo systemctl enable podman.socket
+doas systemctl enable cockpit.socket cockpit.service
+doas systemctl enable podman.socket
 ```
 
 ---
@@ -217,75 +217,75 @@ sudo systemctl enable podman.socket
 ### Enable necessary services
 
 ```bash
-sudo systemctl enable zfs-import-cache.service
-sudo systemctl enable zfs-import-scan.service
-sudo systemctl enable zfs-mount.service
-sudo systemctl enable zfs-share.service
-sudo systemctl enable zfs-zed.service
-sudo systemctl enable zfs.target
+doas systemctl enable zfs-import-cache.service
+doas systemctl enable zfs-import-scan.service
+doas systemctl enable zfs-mount.service
+doas systemctl enable zfs-share.service
+doas systemctl enable zfs-zed.service
+doas systemctl enable zfs.target
 ```
 
 
 ### Make sure an import cache file exists
 
 ```bash
-sudo zpool set cachefile=/etc/zfs/zpool.cache brahmaand
+doas zpool set cachefile=/etc/zfs/zpool.cache brahmaand
 ```
 
 
 ### Creating a new zpool?
 
 ```bash
-sudo zpool create -o ashift=12 -o autotrim=on brahmaand /dev/sda
+doas zpool create -o ashift=12 -o autotrim=on brahmaand /dev/sda
 
-sudo zfs set atime=off brahmaand
-sudo zfs set primarycache=all brahmaand
-sudo zfs set recordsize=1M brahmaand
-sudo zfs set xattr=sa brahmaand
+doas zfs set atime=off brahmaand
+doas zfs set primarycache=all brahmaand
+doas zfs set recordsize=1M brahmaand
+doas zfs set xattr=sa brahmaand
 
-sudo zfs create brahmaand/containers
-sudo zfs create brahmaand/containers/volumes
-sudo zfs create brahmaand/containers/volumes/blog
-sudo zfs create brahmaand/containers/volumes/caddy
-sudo zfs create brahmaand/containers/volumes/mach
+doas zfs create brahmaand/containers
+doas zfs create brahmaand/containers/volumes
+doas zfs create brahmaand/containers/volumes/blog
+doas zfs create brahmaand/containers/volumes/caddy
+doas zfs create brahmaand/containers/volumes/mach
 
-sudo zfs create brahmaand/containers/volumes/gitea
-sudo zfs create brahmaand/containers/volumes/gitea/database
-sudo zfs set recordsize=8K brahmaand/containers/volumes/gitea/database
+doas zfs create brahmaand/containers/volumes/gitea
+doas zfs create brahmaand/containers/volumes/gitea/database
+doas zfs set recordsize=8K brahmaand/containers/volumes/gitea/database
 
-sudo zfs create brahmaand/containers/volumes/nextcloud
-sudo zfs create brahmaand/containers/volumes/nextcloud/database
-sudo zfs set recordsize=8K brahmaand/containers/volumes/nextcloud/database
+doas zfs create brahmaand/containers/volumes/nextcloud
+doas zfs create brahmaand/containers/volumes/nextcloud/database
+doas zfs set recordsize=8K brahmaand/containers/volumes/nextcloud/database
 
-sudo zfs create brahmaand/torrents
-sudo zfs set recordsize=16K brahmaand/torrents
-sudo zfs create brahmaand/torrents/downloads
-sudo zfs create brahmaand/torrents/downloads/.incomplete
-sudo zfs create brahmaand/torrents/config
+doas zfs create brahmaand/torrents
+doas zfs set recordsize=16K brahmaand/torrents
+doas zfs create brahmaand/torrents/downloads
+doas zfs create brahmaand/torrents/downloads/.incomplete
+doas zfs create brahmaand/torrents/config
 
-sudo chown pratham:pratham -vR /brahmaand
-sudo chown pratham:pratham -vR /brahmaand/torrents
+doas chown pratham:pratham -vR /brahmaand
+doas chown pratham:pratham -vR /brahmaand/torrents
 
-sudo zfs allow -u pratham create,destroy,mount,snapshot,send,hold brahmaand
+doas zfs allow -u pratham create,destroy,mount,snapshot,send,hold brahmaand
 
-sudo zpool export brahmaand
+doas zpool export brahmaand
 
-sudo zpool import
-sudo zpool import -d /dev/disk/by-id <pool-id>
+doas zpool import
+doas zpool import -d /dev/disk/by-id <pool-id>
 
-sudo zpool set cachefile=/etc/zfs/zpool.cache brahmaand
+doas zpool set cachefile=/etc/zfs/zpool.cache brahmaand
 
 zpool status -v
 zfs list
 
-sudo zpool scrub brahmaand
+doas zpool scrub brahmaand
 ```
 
 
 ### Reboot
 
 ```bash
-sudo reboot +0
+doas reboot +0
 ```
 
 ---
@@ -297,7 +297,7 @@ sudo reboot +0
 ### Pull images
 
 ```bash
-sleep 60 && podman pull docker.io/library/postgres:14-alpine
+sleep 60 && podman pull docker.io/library/postgres:15-alpine
 sleep 60 && podman pull docker.io/library/caddy:alpine
 sleep 60 && podman pull docker.io/klakegg/hugo:ext-debian
 sleep 60 && podman pull docker.io/library/nextcloud:production
@@ -309,29 +309,29 @@ sleep 60 && podman pull docker.io/gitea/gitea:latest
 ### Get fs ready
 
 ```bash
-sudo zfs set atime=off brahmaand
-sudo zfs set primarycache=all brahmaand
-sudo zfs set recordsize=1M brahmaand
-sudo zfs set xattr=sa brahmaand
+doas zfs set atime=off brahmaand
+doas zfs set primarycache=all brahmaand
+doas zfs set recordsize=1M brahmaand
+doas zfs set xattr=sa brahmaand
 
-sudo zfs create brahmaand/containers
-sudo zfs create brahmaand/containers/volumes
-sudo zfs create brahmaand/containers/volumes/blog
-sudo zfs create brahmaand/containers/volumes/caddy
-sudo zfs create brahmaand/containers/volumes/gitea
-sudo zfs create brahmaand/containers/volumes/mach
-sudo zfs create brahmaand/containers/volumes/nextcloud
+doas zfs create brahmaand/containers
+doas zfs create brahmaand/containers/volumes
+doas zfs create brahmaand/containers/volumes/blog
+doas zfs create brahmaand/containers/volumes/caddy
+doas zfs create brahmaand/containers/volumes/gitea
+doas zfs create brahmaand/containers/volumes/mach
+doas zfs create brahmaand/containers/volumes/nextcloud
 
-sudo zfs create brahmaand/torrents
-sudo zfs set recordsize=16K brahmaand/torrents
-sudo zfs create brahmaand/torrents/downloads
-sudo zfs create brahmaand/torrents/downloads/.incomplete
-sudo zfs create brahmaand/torrents/config
+doas zfs create brahmaand/torrents
+doas zfs set recordsize=16K brahmaand/torrents
+doas zfs create brahmaand/torrents/downloads
+doas zfs create brahmaand/torrents/downloads/.incomplete
+doas zfs create brahmaand/torrents/config
 
-sudo chown pratham:pratham -vR /brahmaand/containers/volumes
-sudo chown pratham:pratham -vR /brahmaand/torrents
+doas chown pratham:pratham -vR /brahmaand/containers/volumes
+doas chown pratham:pratham -vR /brahmaand/torrents
 
-sudo zfs allow -u pratham send,snapshot,hold brahmaand
+doas zfs allow -u pratham send,snapshot,hold brahmaand
 ```
 
 
@@ -347,7 +347,7 @@ mkdir -vp /brahmaand/containers/volumes/nextcloud/{database,web}
 ### Enable workaround for "root-less containers can't ping hosts"
 
 ```bash
-grep net.ipv4.ping_group_range /etc/sysctl.conf || echo "net.ipv4.ping_group_range=0 $(grep pratham /etc/subuid | awk -F ":" '{print $2 + $3}')" | sudo tee -a /etc/sysctl.conf
+grep net.ipv4.ping_group_range /etc/sysctl.conf || echo "net.ipv4.ping_group_range=0 $(grep pratham /etc/subuid | awk -F ":" '{print $2 + $3}')" | doas tee -a /etc/sysctl.conf
 ```
 
 
@@ -393,7 +393,7 @@ cp -v Caddyfile /brahmaand/containers/volumes/caddy/
 something-something enable SSL for cockpit
 
 ```bash
-sudo cp cockpit.conf /etc/cockpit/cockpit.conf
+doas cp cockpit.conf /etc/cockpit/cockpit.conf
 ```
 
 
@@ -408,7 +408,7 @@ openssl rand -base64 20 | podman secret create nextcloud_database_user_password 
 ### Enable user lingering
 
 ```bash
-sudo loginctl enable-linger
+doas loginctl enable-linger
 ```
 
 
@@ -454,7 +454,7 @@ Add the following lines to the `/etc/exports` file:
 Then, export it.
 
 ```bash
-sudo exportfs -rva
+doas exportfs -rva
 ```
 
 ---
