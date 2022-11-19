@@ -135,11 +135,11 @@ apt install -y aria2 wget2
 apt install -y adb fastboot
 
 # coreutils-rust
-apt install -y bat fd-find ripgrep
+apt install -y bat fd-find ripgrep tre-command
 #apt install -y skim
 
 # system utils
-apt install -y eatmydata hd-idle hdparm smartmontools ssmtp tldr tre-command wakeonlan yt-dlp
+apt install -y eatmydata hd-idle hdparm smartmontools ssmtp tldr wakeonlan yt-dlp
 
 # compression
 apt install -y tar unrar-free unzip xz-utils zip
