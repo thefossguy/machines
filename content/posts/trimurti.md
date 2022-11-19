@@ -129,7 +129,7 @@ apt install -y btop htop iotop nload iperf iperf3
 apt install -y aardvark-dns bridge-utils podman podman-compose slirp4netns buildah-
 
 # download clients
-apt install -y aria2 wget2
+apt install -y aria2 wget2 yt-dlp
 
 # android-stuff
 apt install -y adb fastboot
@@ -139,7 +139,7 @@ apt install -y bat fd-find ripgrep tre-command
 #apt install -y skim
 
 # system utils
-apt install -y eatmydata hd-idle hdparm smartmontools ssmtp tldr wakeonlan yt-dlp
+apt install -y eatmydata hd-idle hdparm smartmontools ssmtp tldr wakeonlan
 
 # compression
 apt install -y tar unrar-free unzip xz-utils zip
