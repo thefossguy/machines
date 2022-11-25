@@ -113,8 +113,8 @@ sudo dnf clean all
 ### Remove Kernel cmdline args
 
 ```bash
-sudo grubby --remove-args=quiet --update-kernel=ALL
-sudo grubby --remove-args=rhgb --update-kernel=ALL
+sudo grubby --update-kernel=ALL --remove-args=quiet
+sudo grubby --update-kernel=ALL --remove-args=rhgb
 ```
 
 
