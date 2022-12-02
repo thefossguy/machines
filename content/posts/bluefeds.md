@@ -314,7 +314,7 @@ sudo reboot +0
 ### Open ports
 
 ```bash
-sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp --add-port=8050/tcp --add-port=8051/tcp --add-port=8052/udp
+sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp --add-port=8050/tcp --add-port=8060/tcp --add-port=8061/tcp --add-port=8062/udp
 sudo firewall-cmd --reload
 sudo firewall-cmd --list-ports
 ```
@@ -326,6 +326,7 @@ sudo firewall-cmd --list-ports
 sleep 60 && podman pull docker.io/library/postgres:14-alpine
 sleep 60 && podman pull docker.io/library/caddy:alpine
 sleep 60 && podman pull docker.io/klakegg/hugo:ext-debian
+sleep 60 && podman pull docker.io/gotify/server-arm64:latest
 sleep 60 && podman pull docker.io/library/nextcloud:production
 sleep 60 && podman pull docker.io/klakegg/hugo:alpine
 sleep 60 && podman pull docker.io/gitea/gitea:latest
