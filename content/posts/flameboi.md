@@ -140,7 +140,7 @@ cargo install cargo-outdated cargo-tree
 ### Flatpak
 
 ```bash
-flatpak install flathub com.bitwarden.desktop com.brave.Browser com.dangeredwolf.ModernDeck com.github.micahflee.torbrowser-launcher com.github.tchx84.Flatseal com.sublimetext.three flathub io.gitlab.librewolf-community org.ksnip.ksnip org.mozilla.firefox org.mozilla.Thunderbird org.telegram.desktop
+flatpak install com.bitwarden com.brave.Browser com.dangeredwolf.ModernDeck com.github.micahflee.torbrowser-launcher com.github.tchx84.Flatseal com.google.Chrome com.sublimetext.three io.gitlab.librewolf-community org.ksnip.ksnip org.mozilla.Thunderbird org.raspberrypi.rpi-imager
 ```
 
 ### Virtualization
