@@ -167,6 +167,9 @@ sudo reboot +0
 sudo dnf install aardvark-dns aria2 bat btop bind-utils buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools mediainfo neovim nfs-utils nload openssh-server overpass-mono-fonts perl-Digest-SHA plocate podman podman-compose qemu qemu-device-display-virtio-gpu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools ssmtp tmux tree unrar unzip util-linux-user vim-enhanced wget wget2 yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
 
 # RHEL
+sudo dnf install aardvark-dns btop cockpit console-setup curl fd-find git hdparm htop iotop neovim nfs-utils nload podman podman-compose ripgrep rsync slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
+
+# RHEL
 # aria2 bat buildah fd-find git-delta libvirt-daemon-kvm libwebp-tools overpass-mono-fonts qemu qemu-kvm qemu-kvm-core ripgrep skim ssmtp wget2 zsh-syntax-highlighting
 # nfs-utils qrencode-libs samba-common
 sudo dnf install aardvark-dns btop bind-utils cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl git hd-idle hdparm htop iotop mediainfo neovim nload openssh-server perl-Digest-SHA podman podman-compose rsync slirp4netns smartmontools tmux tree unrar unzip util-linux-user vim-enhanced wget yt-dlp yt-dlp-zsh-completion zsh
@@ -215,6 +218,9 @@ git clone --depth 1 --branch <latest_tag_name> https://github.com/openzfs/zfs
 # Fedora Server
 sudo dnf install autoconf automake dkms elfutils-libelf-devel gcc git kernel-doc kernel-devel-$(uname -r) kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make ncompress openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
 
+# RHEL FINAL
+sudo dnf install autoconf automake bind-utils dkms elfutils-libelf-devel gcc git kernel-devel kernel-devel-matched kernel-doc kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
+
 # RHEL-mainline-kernel
 sudo dnf install gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel libuuid-devel libudev-devel openssl-devel zlib-devel libaio-devel libattr-devel elfutils-libelf-devel kernel-devel-matched python3 python3-devel python3-setuptools python3-cffi libffi-devel git libcurl-devel python3-packaging dkms bind-utils
 
@@ -241,6 +247,20 @@ sudo systemctl enable zfs-mount.service
 sudo systemctl enable zfs-share.service
 sudo systemctl enable zfs.target
 sudo systemctl enable zfs-zed.service
+
+50-zfs.preset
+zfs-zed.service
+zfs-import-cache.service
+zfs-import-scan.service
+zfs-mount.service
+zfs-share.service
+zfs-volume-wait.service
+zfs-import.target
+zfs-volumes.target
+zfs.target
+zfs-scrub-monthly@.timer
+zfs-scrub-weekly@.timer
+zfs-scrub@.service
 ```
 
 
