@@ -140,7 +140,7 @@ cargo install cargo-outdated cargo-tree
 ### Flatpak
 
 ```bash
-flatpak install com.bitwarden com.brave.Browser com.dangeredwolf.ModernDeck com.github.micahflee.torbrowser-launcher com.github.tchx84.Flatseal com.google.Chrome com.sublimetext.three io.gitlab.librewolf-community org.ksnip.ksnip org.mozilla.Thunderbird org.raspberrypi.rpi-imager
+flatpak install flathub com.bitwarden.desktop com.brave.Browser com.dangeredwolf.ModernDeck com.github.micahflee.torbrowser-launcher com.github.tchx84.Flatseal com.sublimetext.three flathub io.gitlab.librewolf-community org.ksnip.ksnip org.mozilla.firefox org.mozilla.Thunderbird org.telegram.desktop
 ```
 
 ### Virtualization
@@ -152,12 +152,64 @@ sudo adduser pratham libvirt
 sudo adduser pratham kvm
 ```
 
+Change backend
+
+```bash
+sudo sed -i 's/FirewallBackend=nftables/FirewallBackend=iptables/g' /etc/firewalld/firewalld.conf
+```
+
+Enable autostart of `default` network
+
+```bash
+sudo virsh net-autostart default
+sudo virsh net-list --all
+```
+
 Edit `/etc/libvirt/qemu.conf` and modify it as follows:
 
 ```
 user = "pratham"
 [...]
 roup = "pratham"
+```
+
+---
+
+List current pools
+
+```bash
+sudo virsh pool-list
+```
+
+Delete `default` pool
+
+```bash
+sudo virsh pool-destroy default
+```
+
+Undefine the pool
+
+```bash
+sudo virsh pool-undefine default
+```
+
+Use `/flameboi_st/vm-store` as `default`'s path
+
+```bash
+sudo virsh pool-define-as --name default --type dir --target /flameboi_st/vm-store
+```
+
+Enable autostarting `default` storage pool
+
+```bash
+sudo virsh pool-autostart default
+sudo virsh pool-start default
+```
+
+Verify:
+
+```bash
+sudo virsh pool-list
 ```
 
 Restart the `libvirtd` service
