@@ -157,18 +157,9 @@ sudo reboot +0
 ### Install packages
 
 ```bash
-# Fedora
-sudo dnf install aardvark-dns aria2 bat btop bind-utils buildah cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl fd-find git git-delta hd-idle hdparm htop iotop libvirt-daemon-kvm libwebp-tools mediainfo neovim nfs-utils nload openssh-server overpass-mono-fonts perl-Digest-SHA plocate podman podman-compose qemu qemu-device-display-virtio-gpu qemu-kvm qemu-kvm-core qrencode-libs ripgrep rsync samba-common skim slirp4netns smartmontools ssmtp tmux tree unrar unzip util-linux-user vim-enhanced wget wget2 yt-dlp yt-dlp-zsh-completion zsh zsh-syntax-highlighting
+sudo dnf install aardvark-dns bat bind-utils btop cockpit console-setup fd-find git hdparm htop iotop neovim nfs-utils nload openssh-server mlocate podman podman-compose ripgrep rsync samba-common slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
 
-# RHEL
-sudo dnf install aardvark-dns btop cockpit console-setup curl fd-find git hdparm htop iotop neovim nfs-utils nload podman podman-compose ripgrep rsync slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
-
-# RHEL
-# aria2 bat buildah fd-find git-delta libvirt-daemon-kvm libwebp-tools overpass-mono-fonts qemu qemu-kvm qemu-kvm-core ripgrep skim ssmtp wget2 zsh-syntax-highlighting
-# nfs-utils qrencode-libs samba-common
-sudo dnf install aardvark-dns btop bind-utils cockpit cockpit-file-sharing cockpit-machines cockpit-packagekit cockpit-pcp cockpit-podman cockpit-session-recording console-setup cronie cronie-anacron curl git hd-idle hdparm htop iotop mediainfo neovim nload openssh-server perl-Digest-SHA podman podman-compose rsync slirp4netns smartmontools tmux tree unrar unzip util-linux-user vim-enhanced wget yt-dlp yt-dlp-zsh-completion zsh
-
-chsh -s $(which zsh) $(whoami)
+chsh -s $(which zsh) pratham
 ```
 
 
