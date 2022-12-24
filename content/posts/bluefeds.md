@@ -96,15 +96,9 @@ Exclude package `shim-aa64` (causes uboot to panic)
 ```bash
 echo -ne "\nmax_parallel_downloads=20\nlog_compress=True\nfastestmirror=False" | sudo tee -a /etc/dnf/dnf.conf
 
-# RPM Fusion is not necessary for a server but handy if I switch to Fedora on Desktop (*laughs in Arch*)
-#sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-#sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-# If GNOME is being used, update `core` too
-#sudo dnf group update core
-
-# epel for CentOS
-sudo dnf config-manager --set-enabled crb
-sudo dnf install epel-release epel-next-release -y
+# RHEL EPEL
+sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
 sudo dnf clean all
 ```
