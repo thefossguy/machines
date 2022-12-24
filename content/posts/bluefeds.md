@@ -158,7 +158,17 @@ sudo reboot +0
 
 ```bash
 sudo dnf install aardvark-dns bat bind-utils btop cockpit console-setup fd-find git hdparm htop iotop insights-client mlocate neovim nfs-utils nload openssh-server podman podman-compose ripgrep rsync samba-common slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
+```
 
+### Enable insights
+
+```bash
+sudo insights-client --register
+```
+
+### Change shell to zsh
+
+```bash
 chsh -s $(which zsh) pratham
 ```
 
