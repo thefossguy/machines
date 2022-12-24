@@ -226,26 +226,9 @@ echo "zfs" | sudo tee /etc/modules-load.d/zfs.conf
 ### Enable necessary services
 
 ```bash
-sudo systemctl enable zfs-import-cache.service
-sudo systemctl enable zfs-import-scan.service
-sudo systemctl enable zfs-mount.service
-sudo systemctl enable zfs-share.service
-sudo systemctl enable zfs.target
-sudo systemctl enable zfs-zed.service
+sudo systemctl enable zfs-zed.service zfs-import-cache.service zfs-import-scan.service zfs-mount.service zfs-share.service zfs-volume-wait.service zfs-import.target zfs-volumes.target zfs.target
 
-50-zfs.preset
-zfs-zed.service
-zfs-import-cache.service
-zfs-import-scan.service
-zfs-mount.service
-zfs-share.service
-zfs-volume-wait.service
-zfs-import.target
-zfs-volumes.target
-zfs.target
-zfs-scrub-monthly@.timer
-zfs-scrub-weekly@.timer
-zfs-scrub@.service
+sudo systemctl disable zfs-scrub-monthly@.timer zfs-scrub-weekly@.timer zfs-scrub@.service
 ```
 
 
