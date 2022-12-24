@@ -107,6 +107,7 @@ sudo dnf clean all
 ### Remove Kernel cmdline args
 
 ```bash
+sudo grubby --update-kernel=ALL --args=crashkernel=512M
 sudo grubby --update-kernel=ALL --remove-args=quiet
 sudo grubby --update-kernel=ALL --remove-args=rhgb
 ```
