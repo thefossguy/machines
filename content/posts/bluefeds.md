@@ -311,13 +311,15 @@ sudo firewall-cmd --list-ports
 ### Pull images
 
 ```bash
-sleep 60 && podman pull docker.io/library/postgres:14-alpine
-sleep 60 && podman pull docker.io/library/caddy:alpine
-sleep 60 && podman pull docker.io/klakegg/hugo:ext-debian
-sleep 60 && podman pull docker.io/gotify/server-arm64:latest
-sleep 60 && podman pull docker.io/library/nextcloud:production
-sleep 60 && podman pull docker.io/klakegg/hugo:alpine
-sleep 60 && podman pull docker.io/gitea/gitea:latest
+podman pull docker.io/gitea/gitea:latest
+podman pull docker.io/gotify/server-arm64:latest
+podman pull docker.io/klakegg/hugo:alpine
+podman pull docker.io/klakegg/hugo:ext-debian
+podman pull docker.io/library/caddy:alpine
+podman pull docker.io/library/nextcloud:production
+podman pull docker.io/library/postgres:14-alpine
+podman pull docker.io/louislam/uptime-kuma:debian
+podman pull lscr.io/linuxserver/transmission:latest
 ```
 
 
