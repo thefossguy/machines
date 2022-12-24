@@ -157,7 +157,7 @@ sudo reboot +0
 ### Install packages
 
 ```bash
-sudo dnf install aardvark-dns bat bind-utils btop cockpit console-setup fd-find git hdparm htop iotop neovim nfs-utils nload openssh-server mlocate podman podman-compose ripgrep rsync samba-common slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
+sudo dnf install aardvark-dns bat bind-utils btop cockpit console-setup fd-find git hdparm htop iotop insights-client mlocate neovim nfs-utils nload openssh-server podman podman-compose ripgrep rsync samba-common slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
 
 chsh -s $(which zsh) pratham
 ```
@@ -200,17 +200,7 @@ Get the latest GA release tag [from here](https://github.com/openzfs/zfs/tags).
 ```bash
 git clone --depth 1 --branch <latest_tag_name> https://github.com/openzfs/zfs
 
-# Fedora Server
-sudo dnf install autoconf automake dkms elfutils-libelf-devel gcc git kernel-doc kernel-devel-$(uname -r) kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make ncompress openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
-
-# RHEL FINAL
-sudo dnf install autoconf automake bind-utils dkms elfutils-libelf-devel gcc git kernel-devel kernel-devel-matched kernel-doc kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
-
-# RHEL-mainline-kernel
-sudo dnf install gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel libuuid-devel libudev-devel openssl-devel zlib-devel libaio-devel libattr-devel elfutils-libelf-devel kernel-devel-matched python3 python3-devel python3-setuptools python3-cffi libffi-devel git libcurl-devel python3-packaging dkms bind-utils
-
-# RHEL-raspi-kernel
-sudo dnf install gcc make autoconf automake libtool rpm-build libtirpc-devel libblkid-devel libuuid-devel libudev-devel openssl-devel zlib-devel libaio-devel libattr-devel elfutils-libelf-devel python3 python3-devel python3-setuptools python3-cffi raspberrypi2-kernel4-devel libffi-devel ncompress libcurl-devel python3-packaging dkms bind-utils
+sudo dnf install autoconf automake dkms elfutils-libelf-devel gcc git kernel-devel kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
 
 cd zfs
 sh autogen.sh
