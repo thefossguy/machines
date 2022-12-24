@@ -338,6 +338,8 @@ sudo zfs create trayimurti/containers/volumes/caddy
 sudo zfs create trayimurti/containers/volumes/gitea
 sudo zfs create trayimurti/containers/volumes/mach
 sudo zfs create trayimurti/containers/volumes/nextcloud
+sudo zfs create trayimurti/containers/volumes/gotify
+sudo zfs create trayimurti/containers/volumes/uptimekuma
 
 sudo zfs create trayimurti/torrents
 sudo zfs set recordsize=16K trayimurti/torrents
@@ -444,14 +446,17 @@ cd $HOME/.config/systemd/user
 podman generate systemd -f --name caddy-vishwambhar --new
 podman generate systemd -f --name gitea-chitragupta --new
 podman generate systemd -f --name gitea-govinda --new
-podman generate systemd -f --name hugo-mahayogi --new
 podman generate systemd -f --name hugo-vaikunthnatham --new
+podman generate systemd -f --name hugo-mahayogi --new
 podman generate systemd -f --name nextcloud-chitragupta --new
 podman generate systemd -f --name nextcloud-govinda --new
+podman generate systemd -f --name gotify-akashvani --new
+podman generate systemd -f --name uptime-vishnu --new
+podman generate systemd -f --name transmission-raadhe --new
 
 systemctl --user daemon-reload
 
-systemctl --user enable container-caddy-vishwambhar container-gitea-chitragupta container-gitea-govinda container-hugo-mahayogi container-hugo-vaikunthnatham container-nextcloud-chitragupta container-nextcloud-govinda
+systemctl --user enable container-caddy-vishwambhar.service container-gitea-chitragupta.service container-gitea-govinda.service container-hugo-vaikunthnatham.service container-hugo-mahayogi.service container-nextcloud-chitragupta.service container-nextcloud-govinda.service container-gotify-akashvani.service container-uptime-vishnu.service container-transmission-raadhe.service
 ```
 
 ---
