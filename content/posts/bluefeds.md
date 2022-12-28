@@ -99,6 +99,7 @@ echo -ne "\nmax_parallel_downloads=20\nlog_compress=True\nfastestmirror=False" |
 # RHEL EPEL
 sudo subscription-manager repos --enable codeready-builder-for-rhel-9-$(arch)-rpms
 sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+sudo /usr/bin/crb enable
 
 sudo dnf clean all
 ```
