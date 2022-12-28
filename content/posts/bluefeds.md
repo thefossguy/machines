@@ -62,7 +62,7 @@ echo "wireguard" | sudo tee /etc/modules-load.d/wireguard.conf
 ### Modify motd
 
 ```bash
-echo "\n# added by PRATHAM\n/home/pratham/.scripts/_bluefeds/motd/show_logs.sh" | sudo tee -a /etc/profile
+echo -e "\n# added by PRATHAM\n/home/pratham/.scripts/_bluefeds/motd/show_logs.sh" | sudo tee -a /etc/profile
 ```
 
 
