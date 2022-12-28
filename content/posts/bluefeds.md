@@ -264,11 +264,14 @@ sudo zpool set cachefile=/etc/zfs/zpool.cache trayimurti
 ### Creating a new zpool?
 
 ```bash
-sudo zpool create -o ashift=12 -o autotrim=on trayimurti /dev/sda
+sudo zpool create -o ashift=12 -o autotrim=on trayimurti mirror /dev/sda /dev/sdb
 
 sudo zfs set atime=off trayimurti
+sudo zfs set checksum=on trayimurti
+sudo zfs set compression=zstd trayimurti
 sudo zfs set primarycache=all trayimurti
 sudo zfs set recordsize=1M trayimurti
+sudo zfs set snapdir=hidden trayimurti
 sudo zfs set xattr=sa trayimurti
 
 sudo zfs create trayimurti/containers
@@ -276,35 +279,33 @@ sudo zfs create trayimurti/containers/volumes
 sudo zfs create trayimurti/containers/volumes/blog
 sudo zfs create trayimurti/containers/volumes/caddy
 sudo zfs create trayimurti/containers/volumes/mach
+sudo zfs create trayimurti/containers/volumes/gotify
+sudo zfs create trayimurti/containers/volumes/uptimekuma
+sudo zfs set copies=3 trayimurti/containers/volumes/uptimekuma
 
 sudo zfs create trayimurti/containers/volumes/gitea
+sudo zfs set copies=3 trayimurti/containers/volumes/gitea
 sudo zfs create trayimurti/containers/volumes/gitea/database
 sudo zfs set recordsize=8K trayimurti/containers/volumes/gitea/database
 
 sudo zfs create trayimurti/containers/volumes/nextcloud
+sudo zfs set copies=3 trayimurti/containers/volumes/nextcloud
 sudo zfs create trayimurti/containers/volumes/nextcloud/database
 sudo zfs set recordsize=8K trayimurti/containers/volumes/nextcloud/database
 
 sudo zfs create trayimurti/torrents
 sudo zfs set recordsize=16K trayimurti/torrents
 sudo zfs create trayimurti/torrents/downloads
-sudo zfs create trayimurti/torrents/downloads/.incomplete
 sudo zfs create trayimurti/torrents/config
 
-sudo chown pratham:pratham -vR /trayimurti
-sudo chown pratham:pratham -vR /trayimurti/torrents
-
-sudo zfs allow -u pratham create,destroy,mount,snapshot,send,hold trayimurti
+sudo zfs allow -u pratham diff,rollback,mount,snapshot,send,hold trayimurti
 
 sudo zpool export trayimurti
-
 sudo zpool import
 sudo zpool import -d /dev/disk/by-id <pool-id>
 
 sudo zpool set cachefile=/etc/zfs/zpool.cache trayimurti
-
-zpool status -v
-zfs list
+sudo chown pratham:pratham -vR /trayimurti
 
 sudo zpool scrub trayimurti
 ```
@@ -342,37 +343,6 @@ podman pull docker.io/library/nextcloud:production
 podman pull docker.io/library/postgres:14-alpine
 podman pull docker.io/louislam/uptime-kuma:debian
 podman pull lscr.io/linuxserver/transmission:latest
-```
-
-
-### Get fs ready
-
-```bash
-sudo zfs set atime=off trayimurti
-sudo zfs set primarycache=all trayimurti
-sudo zfs set recordsize=1M trayimurti
-sudo zfs set xattr=sa trayimurti
-
-sudo zfs create trayimurti/containers
-sudo zfs create trayimurti/containers/volumes
-sudo zfs create trayimurti/containers/volumes/blog
-sudo zfs create trayimurti/containers/volumes/caddy
-sudo zfs create trayimurti/containers/volumes/gitea
-sudo zfs create trayimurti/containers/volumes/mach
-sudo zfs create trayimurti/containers/volumes/nextcloud
-sudo zfs create trayimurti/containers/volumes/gotify
-sudo zfs create trayimurti/containers/volumes/uptimekuma
-
-sudo zfs create trayimurti/torrents
-sudo zfs set recordsize=16K trayimurti/torrents
-sudo zfs create trayimurti/torrents/downloads
-sudo zfs create trayimurti/torrents/downloads/.incomplete
-sudo zfs create trayimurti/torrents/config
-
-sudo chown pratham:pratham -vR /trayimurti/containers/volumes
-sudo chown pratham:pratham -vR /trayimurti/torrents
-
-sudo zfs allow -u pratham send,snapshot,hold trayimurti
 ```
 
 
