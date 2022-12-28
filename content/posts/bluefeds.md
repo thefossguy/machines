@@ -59,6 +59,26 @@ echo "wireguard" | sudo tee /etc/modules-load.d/wireguard.conf
 ```
 
 
+### SSH hardening
+
+```bash
+ssh pratham@localhost
+exit
+
+vim ~/.ssh/authorized_keys
+chmod 644 ~/.ssh/authorized_keys
+
+sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
+sudo sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords no/g' /etc/ssh/sshd_config
+sudo sed -i 's/#ClientAliveInterval 0/ClientAliveInterval 300/g' /etc/ssh/sshd_config
+sudo sed -i 's/#ClientAliveCountMax 3/ClientAliveCountMax 2/g' /etc/ssh/sshd_config
+sudo sed -i 's/#X11Forwarding no/X11Forwarding no/g' /etc/ssh/sshd_config
+
+sudo systemctl restart sshd.service
+```
+
+
 ### Modify motd
 
 ```bash
