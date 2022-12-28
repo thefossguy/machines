@@ -171,7 +171,7 @@ sudo insights-client --register
 ### Change shell to zsh
 
 ```bash
-chsh -s $(which zsh) pratham
+sudo chsh -s $(which zsh) pratham
 ```
 
 
@@ -212,7 +212,7 @@ Get the latest GA release tag [from here](https://github.com/openzfs/zfs/tags).
 ```bash
 git clone --depth 1 --branch <latest_tag_name> https://github.com/openzfs/zfs
 
-sudo dnf install autoconf automake dkms elfutils-libelf-devel gcc git kernel-devel kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
+sudo dnf install autoconf automake dkms elfutils-libelf-devel gcc kernel-devel kernel-rpm-macros libaio-devel libattr-devel libblkid-devel libcurl-devel libffi-devel libtirpc-devel libtool libudev-devel libuuid-devel make openssl-devel python3 python3-cffi python3-devel python3-packaging python3-setuptools rpm-build zlib-devel
 
 cd zfs
 sh autogen.sh
