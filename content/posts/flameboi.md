@@ -120,9 +120,9 @@ sudo cp -v $DOTFILES_DIR/_OTHER/flameboi/usr/share/xsessions/bspwm.desktop /usr/
 
 ```bash
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-```
 
-**Open `nvim` and type `:PlugInstall`**
+nvim +'PlugInstall' +'q' +'q'
+```
 
 
 ### Rust setup
@@ -131,8 +131,7 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 rustup default stable
-rustup component add rust-src rust-analyzer
-#rustup component add rust-analysis
+rustup component add rust-src rust-analyzer rust-analysis
 
 cargo install cargo-outdated cargo-tree
 ```
