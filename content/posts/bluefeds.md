@@ -59,6 +59,16 @@ echo "wireguard" | sudo tee /etc/modules-load.d/wireguard.conf
 ```
 
 
+### Change systemd/journald behaviour
+
+```bash
+sudo sed -i 's/#Storage=/Storage=persistent/g' /etc/systemd/journald.conf
+sudo sed -i 's/#Compress=/Compress=yes/g' /etc/systemd/journald.conf
+sudo sed -i 's/#SystemMaxUse=/SystemMaxUse=1000M/g' /etc/systemd/journald.conf
+sudo sed -i 's/#RuntimeMaxUse=/RuntimeMaxUse=200M/g' /etc/systemd/journald.conf
+```
+
+
 ### SSH hardening
 
 ```bash
@@ -199,9 +209,9 @@ sudo chsh -s $(which zsh) pratham
 
 ```bash
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-```
 
-**Open `nvim` and type `:PlugInstall`**
+nvim +'PlugInstall' +'q' +'q'
+```
 
 
 ### Enable systemd services
@@ -459,41 +469,42 @@ systemctl --user enable container-caddy-vishwambhar.service container-gitea-chit
 ### user crontab
 
 ```bash
-# always add ">/dev/null 2>&1" at the end of cronjobs
-# to prevnet a `dead.letter` in $HOME/
+# run maintainence scripts
+* * * * * /home/pratham/.scripts/reddish/cron/pratham/check-caddy.sh > /dev/null
+* * * * * /home/pratham/.scripts/reddish/cron/pratham/zfs-pool-health.sh > /dev/null
+0 * * * * /home/pratham/.scripts/reddish/cron/pratham/container-updates.sh > /dev/null
 
+# create zfs snapshots every Friday
+0 0 * * 5 /sbin/zfs snapshot trayimurti/containers/volumes/uptimekuma@"$(date +%Y_%m_%d__%H_%M_%S)" > /dev/null
+0 0 * * 5 /sbin/zfs snapshot trayimurti/containers/volumes/gitea@"$(date +%Y_%m_%d__%H_%M_%S)" > /dev/null
+0 0 * * 5 /sbin/zfs snapshot trayimurti/containers/volumes/nextcloud@"$(date +%Y_%m_%d__%H_%M_%S)" > /dev/null
 
-# check if containers are running or not; restart if stopped
-*/5 * * * * bash /home/pratham/.scripts/_bluefeds/cron/pratham/maintenance.sh >/dev/null 2>&1
+# keep journal size up-to 200M
+0 0 * * * /bin/journalctl -vacuum-size=200M > /dev/null
 
+# update neovim plugins
+0 0 * * * /home/pratham/.scripts/reddish/cron/pratham/neovim-update.sh > /dev/null
 
 # run Nextcloud cron
-*/5 * * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/cron.php >/dev/null 2>&1
-
+*/5 * * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/cron.php > /dev/null
 
 # Nextcloud: scan files for all users and perform cleanup
-10 */2 * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/occ files:scan --all >/dev/null 2>&1
-40 */2 * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/occ files:cleanup >/dev/null 2>&1
+10 */2 * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/occ files:scan --all > /dev/null
+40 */2 * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/occ files:cleanup > /dev/null
 ```
 
 
 ### root crontab
 
 ```bash
-# always add ">/dev/null 2>&1" at the end of cronjobs
-# to prevnet a `dead.letter` in $HOME/
-
-
 # update fs database every 6 hours
-* */6 * * * updatedb >/dev/null 2>&1
+* */6 * * * updatedb > /dev/null
 
-
-# create zfs snapshots every Friday
-0 0 * * 5 bash /home/pratham/.scripts/_bluefeds/cron/root/zfs-bak.sh >/dev/null 2>&1
-
+# check for updates every hour
+0 * * * * /home/pratham/.scripts/reddish/cron/root/dnf-upgrades.sh > /dev/null
 
 # start scrub
 # on the first Friday of every month
 # at 2100 hours
-0 21 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub >/dev/null 2>&1
+0 21 * * 5 [ $(date +\%d) -le 07 ] && /sbin/zpool scrub trayimurti && /home/pratham/.scripts/reddish/cron/pratham/zfs-scrub.sh > /dev/null
 ```
