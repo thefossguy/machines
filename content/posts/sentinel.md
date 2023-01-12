@@ -125,9 +125,9 @@ chsh -s $(which zsh) $(whoami)
 
 ```bash
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-```
 
-**Open `nvim` and type `:PlugInstall`**
+nvim +'PlugInstall' +'q' +'q'
+```
 
 
 ## Stage 0100: ZFS
