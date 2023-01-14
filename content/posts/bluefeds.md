@@ -189,7 +189,7 @@ sudo reboot +0
 ### Install packages
 
 ```bash
-sudo dnf install aardvark-dns bat bind-utils btop cockpit console-setup fd-find git hdparm htop iotop insights-client mlocate neovim nfs-utils nload openssh-server podman podman-compose ripgrep rsync samba-common slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
+sudo dnf install aardvark-dns bat bind-utils btop cockpit console-setup fd-find ffmpeg-free git hdparm htop insights-client iotop libavcodec-free libavfilter-free libavformat-free libavutil-free libpostproc-free libswresample-free libswscale-free mlocate neovim nfs-utils nload openssh-server podman podman-compose ripgrep rsync samba-common slirp4netns smartmontools tmux tree unrar unzip util-linux-user wget yt-dlp yt-dlp-zsh-completion zsh
 ```
 
 ### Enable insights
