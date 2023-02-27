@@ -211,6 +211,13 @@ Verify:
 sudo virsh pool-list
 ```
 
+Tell `libvirtd.service` to wait for ZFS import by adding the following line
+to `/usr/lib/systemd/system/libvirtd.service`
+
+```
+After=zfs-import.target
+```
+
 Restart the `libvirtd` service
 
 ```bash
