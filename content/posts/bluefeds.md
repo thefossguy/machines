@@ -24,6 +24,15 @@ sudo lvchange -an /dev/fedora_fedora/root
 sudo eject /dev/XXX
 ```
 
+## File system and partitions:
+
+```
+<resv for PFTF>    256MB
+/boot/efi          1G
+/                  15G
+/home              <rest>
+```
+
 ---
 
 
